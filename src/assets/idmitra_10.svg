@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" style="background:#08090e; font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Roboto,sans-serif;">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#08090e" />
+      <stop offset="100%" stop-color="#0f111a" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.3" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="16" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1600" height="900" fill="url(#bgGrad)" />
+
+  <!-- Grid overlay -->
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1" />
+  </pattern>
+  <rect width="1600" height="900" fill="url(#grid)" />
+
+  <!-- Ambient Lights -->
+  <circle cx="250" cy="150" r="320" fill="#06b6d4" opacity="0.14" filter="url(#glow)" />
+  <circle cx="1380" cy="750" r="360" fill="#06b6d4" opacity="0.08" filter="url(#glow)" />
+
+  <!-- Main Window Frame -->
+  <rect x="50" y="40" width="1500" height="820" rx="20" fill="#0b0d14" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
+
+  <!-- Top Window Bar -->
+  <rect x="50" y="40" width="1500" height="55" rx="20" fill="rgba(18,20,30,0.95)" />
+  <circle cx="85" cy="67" r="6" fill="#ff5f56" />
+  <circle cx="108" cy="67" r="6" fill="#ffbd2e" />
+  <circle cx="131" cy="67" r="6" fill="#27c93f" />
+
+  <text x="170" y="72" fill="#ffffff" font-size="16" font-weight="700" letter-spacing="1.5">IDMITRA // SYSTEM MODULE 010</text>
+  <rect x="1270" y="56" width="250" height="24" rx="12" fill="rgba(255,255,255,0.08)" />
+  <text x="1395" y="72" fill="#06b6d4" font-size="11" font-weight="700" text-anchor="middle" letter-spacing="1">STATUS: ONLINE &amp; SECURE</text>
+
+  <!-- Sidebar Nav -->
+  <rect x="50" y="95" width="210" height="765" fill="rgba(10,11,18,0.85)" border-right="1px stroke rgba(255,255,255,0.05)" />
+  <rect x="68" y="125" width="174" height="40" rx="10" fill="#06b6d4" opacity="0.2" stroke="#06b6d4" stroke-width="1" />
+  <text x="88" y="150" fill="#06b6d4" font-size="13" font-weight="700">VIEW 010 / 10</text>
+
+  <text x="88" y="210" fill="rgba(255,255,255,0.6)" font-size="12" font-weight="600">DASHBOARD</text>
+  <text x="88" y="255" fill="rgba(255,255,255,0.6)" font-size="12" font-weight="600">ANALYTICS</text>
+  <text x="88" y="300" fill="rgba(255,255,255,0.6)" font-size="12" font-weight="600">DIRECTORY</text>
+  <text x="88" y="345" fill="rgba(255,255,255,0.6)" font-size="12" font-weight="600">LOGISTICS</text>
+  <text x="88" y="390" fill="rgba(255,255,255,0.6)" font-size="12" font-weight="600">SETTINGS</text>
+
+  <!-- Slide Header Banner -->
+  <rect x="285" y="115" width="1240" height="85" rx="14" fill="rgba(18,21,34,0.65)" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+  <rect x="305" y="132" width="90" height="26" rx="6" fill="#06b6d4" />
+  <text x="350" y="149" fill="#000000" font-size="11" font-weight="900" text-anchor="middle">MODULE 010</text>
+
+  <text x="415" y="152" fill="#ffffff" font-size="22" font-weight="800">Enterprise Software Subscription Catalog</text>
+  <text x="415" y="178" fill="rgba(255,255,255,0.6)" font-size="13" font-weight="500">Bulk card credit packages, ID templates &amp; print hardware tiers</text>
+
+  <!-- Dynamic Unique Content Layout -->
+  
+  <g>
+    
+        <g transform="translate(285, 220)">
+          <rect width="395" height="280" rx="14" fill="rgba(18,21,34,0.85)" stroke="rgba(255,255,255,0.08)" />
+          <rect x="20" y="20" width="355" height="130" rx="10" fill="#06b6d4" opacity="0.15" stroke="#06b6d4" stroke-width="1" />
+          <text x="197" y="90" fill="#06b6d4" font-size="18" font-weight="800" text-anchor="middle">ITEM PACKAGE #1</text>
+          <text x="20" y="180" fill="#ffffff" font-size="15" font-weight="700">Enterprise Access Pass / Ticket</text>
+          <text x="20" y="205" fill="rgba(255,255,255,0.5)" font-size="12">Includes full digital access &amp; material sync</text>
+
+          <text x="20" y="250" fill="#06b6d4" font-size="20" font-weight="900">$299.00</text>
+          <rect x="260" y="225" width="115" height="36" rx="18" fill="#06b6d4" />
+          <text x="317" y="248" fill="#000" font-size="11" font-weight="900" text-anchor="middle">PURCHASE</text>
+        </g>
+      
+        <g transform="translate(705, 220)">
+          <rect width="395" height="280" rx="14" fill="rgba(18,21,34,0.85)" stroke="rgba(255,255,255,0.08)" />
+          <rect x="20" y="20" width="355" height="130" rx="10" fill="#06b6d4" opacity="0.15" stroke="#06b6d4" stroke-width="1" />
+          <text x="197" y="90" fill="#06b6d4" font-size="18" font-weight="800" text-anchor="middle">ITEM PACKAGE #2</text>
+          <text x="20" y="180" fill="#ffffff" font-size="15" font-weight="700">Enterprise Access Pass / Ticket</text>
+          <text x="20" y="205" fill="rgba(255,255,255,0.5)" font-size="12">Includes full digital access &amp; material sync</text>
+
+          <text x="20" y="250" fill="#06b6d4" font-size="20" font-weight="900">$299.00</text>
+          <rect x="260" y="225" width="115" height="36" rx="18" fill="#06b6d4" />
+          <text x="317" y="248" fill="#000" font-size="11" font-weight="900" text-anchor="middle">PURCHASE</text>
+        </g>
+      
+        <g transform="translate(1125, 220)">
+          <rect width="395" height="280" rx="14" fill="rgba(18,21,34,0.85)" stroke="rgba(255,255,255,0.08)" />
+          <rect x="20" y="20" width="355" height="130" rx="10" fill="#06b6d4" opacity="0.15" stroke="#06b6d4" stroke-width="1" />
+          <text x="197" y="90" fill="#06b6d4" font-size="18" font-weight="800" text-anchor="middle">ITEM PACKAGE #3</text>
+          <text x="20" y="180" fill="#ffffff" font-size="15" font-weight="700">Enterprise Access Pass / Ticket</text>
+          <text x="20" y="205" fill="rgba(255,255,255,0.5)" font-size="12">Includes full digital access &amp; material sync</text>
+
+          <text x="20" y="250" fill="#06b6d4" font-size="20" font-weight="900">$299.00</text>
+          <rect x="260" y="225" width="115" height="36" rx="18" fill="#06b6d4" />
+          <text x="317" y="248" fill="#000" font-size="11" font-weight="900" text-anchor="middle">PURCHASE</text>
+        </g>
+      
+        <g transform="translate(285, 525)">
+          <rect width="395" height="280" rx="14" fill="rgba(18,21,34,0.85)" stroke="rgba(255,255,255,0.08)" />
+          <rect x="20" y="20" width="355" height="130" rx="10" fill="#06b6d4" opacity="0.15" stroke="#06b6d4" stroke-width="1" />
+          <text x="197" y="90" fill="#06b6d4" font-size="18" font-weight="800" text-anchor="middle">ITEM PACKAGE #4</text>
+          <text x="20" y="180" fill="#ffffff" font-size="15" font-weight="700">Enterprise Access Pass / Ticket</text>
+          <text x="20" y="205" fill="rgba(255,255,255,0.5)" font-size="12">Includes full digital access &amp; material sync</text>
+
+          <text x="20" y="250" fill="#06b6d4" font-size="20" font-weight="900">$299.00</text>
+          <rect x="260" y="225" width="115" height="36" rx="18" fill="#06b6d4" />
+          <text x="317" y="248" fill="#000" font-size="11" font-weight="900" text-anchor="middle">PURCHASE</text>
+        </g>
+      
+        <g transform="translate(705, 525)">
+          <rect width="395" height="280" rx="14" fill="rgba(18,21,34,0.85)" stroke="rgba(255,255,255,0.08)" />
+          <rect x="20" y="20" width="355" height="130" rx="10" fill="#06b6d4" opacity="0.15" stroke="#06b6d4" stroke-width="1" />
+          <text x="197" y="90" fill="#06b6d4" font-size="18" font-weight="800" text-anchor="middle">ITEM PACKAGE #5</text>
+          <text x="20" y="180" fill="#ffffff" font-size="15" font-weight="700">Enterprise Access Pass / Ticket</text>
+          <text x="20" y="205" fill="rgba(255,255,255,0.5)" font-size="12">Includes full digital access &amp; material sync</text>
+
+          <text x="20" y="250" fill="#06b6d4" font-size="20" font-weight="900">$299.00</text>
+          <rect x="260" y="225" width="115" height="36" rx="18" fill="#06b6d4" />
+          <text x="317" y="248" fill="#000" font-size="11" font-weight="900" text-anchor="middle">PURCHASE</text>
+        </g>
+      
+        <g transform="translate(1125, 525)">
+          <rect width="395" height="280" rx="14" fill="rgba(18,21,34,0.85)" stroke="rgba(255,255,255,0.08)" />
+          <rect x="20" y="20" width="355" height="130" rx="10" fill="#06b6d4" opacity="0.15" stroke="#06b6d4" stroke-width="1" />
+          <text x="197" y="90" fill="#06b6d4" font-size="18" font-weight="800" text-anchor="middle">ITEM PACKAGE #6</text>
+          <text x="20" y="180" fill="#ffffff" font-size="15" font-weight="700">Enterprise Access Pass / Ticket</text>
+          <text x="20" y="205" fill="rgba(255,255,255,0.5)" font-size="12">Includes full digital access &amp; material sync</text>
+
+          <text x="20" y="250" fill="#06b6d4" font-size="20" font-weight="900">$299.00</text>
+          <rect x="260" y="225" width="115" height="36" rx="18" fill="#06b6d4" />
+          <text x="317" y="248" fill="#000" font-size="11" font-weight="900" text-anchor="middle">PURCHASE</text>
+        </g>
+      
+  </g>
+</svg>

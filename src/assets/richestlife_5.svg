@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" style="background:#08090e; font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Roboto,sans-serif;">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#08090e" />
+      <stop offset="100%" stop-color="#0f111a" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#10b981" stop-opacity="0.3" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="16" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1600" height="900" fill="url(#bgGrad)" />
+
+  <!-- Grid overlay -->
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1" />
+  </pattern>
+  <rect width="1600" height="900" fill="url(#grid)" />
+
+  <!-- Ambient Lights -->
+  <circle cx="250" cy="150" r="320" fill="#10b981" opacity="0.14" filter="url(#glow)" />
+  <circle cx="1380" cy="750" r="360" fill="#10b981" opacity="0.08" filter="url(#glow)" />
+
+  <!-- Main Window Frame -->
+  <rect x="50" y="40" width="1500" height="820" rx="20" fill="#0b0d14" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
+
+  <!-- Top Window Bar -->
+  <rect x="50" y="40" width="1500" height="55" rx="20" fill="rgba(18,20,30,0.95)" />
+  <circle cx="85" cy="67" r="6" fill="#ff5f56" />
+  <circle cx="108" cy="67" r="6" fill="#ffbd2e" />
+  <circle cx="131" cy="67" r="6" fill="#27c93f" />
+
+  <text x="170" y="72" fill="#ffffff" font-size="16" font-weight="700" letter-spacing="1.5">RICHESTLIFE // SYSTEM MODULE 05</text>
+  <rect x="1270" y="56" width="250" height="24" rx="12" fill="rgba(255,255,255,0.08)" />
+  <text x="1395" y="72" fill="#10b981" font-size="11" font-weight="700" text-anchor="middle" letter-spacing="1">STATUS: ONLINE &amp; SECURE</text>
+
+  <!-- Sidebar Nav -->
+  <rect x="50" y="95" width="210" height="765" fill="rgba(10,11,18,0.85)" border-right="1px stroke rgba(255,255,255,0.05)" />
+  <rect x="68" y="125" width="174" height="40" rx="10" fill="#10b981" opacity="0.2" stroke="#10b981" stroke-width="1" />
+  <text x="88" y="150" fill="#10b981" font-size="13" font-weight="700">VIEW 05 / 10</text>
+
+  <text x="88" y="210" fill="rgba(255,255,255,0.6)" font-size="12" font-weight="600">DASHBOARD</text>
+  <text x="88" y="255" fill="rgba(255,255,255,0.6)" font-size="12" font-weight="600">ANALYTICS</text>
+  <text x="88" y="300" fill="rgba(255,255,255,0.6)" font-size="12" font-weight="600">DIRECTORY</text>
+  <text x="88" y="345" fill="rgba(255,255,255,0.6)" font-size="12" font-weight="600">LOGISTICS</text>
+  <text x="88" y="390" fill="rgba(255,255,255,0.6)" font-size="12" font-weight="600">SETTINGS</text>
+
+  <!-- Slide Header Banner -->
+  <rect x="285" y="115" width="1240" height="85" rx="14" fill="rgba(18,21,34,0.65)" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+  <rect x="305" y="132" width="90" height="26" rx="6" fill="#10b981" />
+  <text x="350" y="149" fill="#000000" font-size="11" font-weight="900" text-anchor="middle">MODULE 05</text>
+
+  <text x="415" y="152" fill="#ffffff" font-size="22" font-weight="800">User Spiritual Awakening Verification</text>
+  <text x="415" y="178" fill="rgba(255,255,255,0.6)" font-size="13" font-weight="500">Master Taiyang Shengde student registration &amp; virtue score</text>
+
+  <!-- Dynamic Unique Content Layout -->
+  
+  <g>
+    <rect x="285" y="220" width="480" height="620" rx="16" fill="rgba(18,21,34,0.85)" stroke="rgba(255,255,255,0.08)" />
+    <circle cx="525" cy="450" r="140" fill="none" stroke="#10b981" stroke-width="3" stroke-dasharray="10 6" filter="url(#glow)" />
+    <circle cx="525" cy="450" r="100" fill="#10b981" opacity="0.1" />
+    <circle cx="525" cy="420" r="40" fill="#10b981" opacity="0.4" />
+    <path d="M 455 520 Q 525 470 595 520" fill="none" stroke="#10b981" stroke-width="4" />
+    <text x="525" y="640" fill="#10b981" font-size="16" font-weight="800" text-anchor="middle">BIOMETRIC MATCH: 99.8%</text>
+
+    <rect x="790" y="220" width="735" height="620" rx="16" fill="rgba(18,21,34,0.85)" stroke="rgba(255,255,255,0.08)" />
+    <text x="825" y="270" fill="#ffffff" font-size="20" font-weight="800">AUTOMATED PROFILE VERIFICATION</text>
+
+    <text x="825" y="330" fill="rgba(255,255,255,0.5)" font-size="12">FULL NAME / TITLE</text>
+    <rect x="825" y="345" width="665" height="50" rx="10" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" />
+    <text x="850" y="377" fill="#ffffff" font-size="14" font-weight="600">Sarah J. Chen (Verified Lead)</text>
+
+    <text x="825" y="430" fill="rgba(255,255,255,0.5)" font-size="12">IDENTIFIER / REGISTRATION NO.</text>
+    <rect x="825" y="445" width="665" height="50" rx="10" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" />
+    <text x="850" y="477" fill="#10b981" font-size="14" font-weight="700">ID-REG-2025-994182-AZ</text>
+
+    <text x="825" y="530" fill="rgba(255,255,255,0.5)" font-size="12">AUTHORIZATION LEVEL</text>
+    <rect x="825" y="545" width="665" height="50" rx="10" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" />
+    <text x="850" y="577" fill="#ffffff" font-size="14" font-weight="600">Tier-1 Administrator &amp; System Auditor</text>
+
+    <rect x="825" y="640" width="240" height="54" rx="27" fill="#10b981" />
+    <text x="945" y="674" fill="#000" font-size="14" font-weight="900" text-anchor="middle">APPROVE &amp; ISSUE PASS</text>
+  </g>
+</svg>

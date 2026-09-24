@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" style="background:#08090e; font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Roboto,sans-serif;">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#08090e" />
+      <stop offset="100%" stop-color="#0f111a" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f97316" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#f97316" stop-opacity="0.3" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="16" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1600" height="900" fill="url(#bgGrad)" />
+
+  <!-- Grid overlay -->
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1" />
+  </pattern>
+  <rect width="1600" height="900" fill="url(#grid)" />
+
+  <!-- Ambient Lights -->
+  <circle cx="250" cy="150" r="320" fill="#f97316" opacity="0.14" filter="url(#glow)" />
+  <circle cx="1380" cy="750" r="360" fill="#f97316" opacity="0.08" filter="url(#glow)" />
+
+  <!-- Main Window Frame -->
+  <rect x="50" y="40" width="1500" height="820" rx="20" fill="#0b0d14" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
+
+  <!-- Top Window Bar -->
+  <rect x="50" y="40" width="1500" height="55" rx="20" fill="rgba(18,20,30,0.95)" />
+  <circle cx="85" cy="67" r="6" fill="#ff5f56" />
+  <circle cx="108" cy="67" r="6" fill="#ffbd2e" />
+  <circle cx="131" cy="67" r="6" fill="#27c93f" />
+
+  <text x="170" y="72" fill="#ffffff" font-size="16" font-weight="700" letter-spacing="1.5">SAFEGENT // SYSTEM MODULE 07</text>
+  <rect x="1270" y="56" width="250" height="24" rx="12" fill="rgba(255,255,255,0.08)" />
+  <text x="1395" y="72" fill="#f97316" font-size="11" font-weight="700" text-anchor="middle" letter-spacing="1">STATUS: ONLINE &amp; SECURE</text>
+
+  <!-- Sidebar Nav -->
+  <rect x="50" y="95" width="210" height="765" fill="rgba(10,11,18,0.85)" border-right="1px stroke rgba(255,255,255,0.05)" />
+  <rect x="68" y="125" width="174" height="40" rx="10" fill="#f97316" opacity="0.2" stroke="#f97316" stroke-width="1" />
+  <text x="88" y="150" fill="#f97316" font-size="13" font-weight="700">VIEW 07 / 10</text>
+
+  <text x="88" y="210" fill="rgba(255,255,255,0.6)" font-size="12" font-weight="600">DASHBOARD</text>
+  <text x="88" y="255" fill="rgba(255,255,255,0.6)" font-size="12" font-weight="600">ANALYTICS</text>
+  <text x="88" y="300" fill="rgba(255,255,255,0.6)" font-size="12" font-weight="600">DIRECTORY</text>
+  <text x="88" y="345" fill="rgba(255,255,255,0.6)" font-size="12" font-weight="600">LOGISTICS</text>
+  <text x="88" y="390" fill="rgba(255,255,255,0.6)" font-size="12" font-weight="600">SETTINGS</text>
+
+  <!-- Slide Header Banner -->
+  <rect x="285" y="115" width="1240" height="85" rx="14" fill="rgba(18,21,34,0.65)" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+  <rect x="305" y="132" width="90" height="26" rx="6" fill="#f97316" />
+  <text x="350" y="149" fill="#000000" font-size="11" font-weight="900" text-anchor="middle">MODULE 07</text>
+
+  <text x="415" y="152" fill="#ffffff" font-size="22" font-weight="800">SOC Voice &amp; Video Command Channel</text>
+  <text x="415" y="178" fill="rgba(255,255,255,0.6)" font-size="13" font-weight="500">Live WebSocket messaging &amp; audio dispatch between field and SOC</text>
+
+  <!-- Dynamic Unique Content Layout -->
+  
+  <g>
+    <rect x="285" y="220" width="850" height="620" rx="16" fill="rgba(18,21,34,0.85)" stroke="rgba(255,255,255,0.08)" />
+    <rect x="325" y="260" width="770" height="380" rx="14" fill="#050609" stroke="rgba(255,255,255,0.1)" />
+
+    
+      <rect x="412" y="485" width="22" height="95" rx="6" fill="#f97316" opacity="0.6000000000000001" />
+    
+      <rect x="454" y="450" width="22" height="130" rx="6" fill="#f97316" opacity="0.8" />
+    
+      <rect x="496" y="415" width="22" height="165" rx="6" fill="#f97316" opacity="1" />
+    
+      <rect x="538" y="380" width="22" height="200" rx="6" fill="#f97316" opacity="0.4" />
+    
+      <rect x="580" y="520" width="22" height="60" rx="6" fill="#f97316" opacity="0.6000000000000001" />
+    
+      <rect x="622" y="485" width="22" height="95" rx="6" fill="#f97316" opacity="0.8" />
+    
+      <rect x="664" y="450" width="22" height="130" rx="6" fill="#f97316" opacity="1" />
+    
+      <rect x="706" y="415" width="22" height="165" rx="6" fill="#f97316" opacity="0.4" />
+    
+      <rect x="748" y="380" width="22" height="200" rx="6" fill="#f97316" opacity="0.6000000000000001" />
+    
+      <rect x="790" y="520" width="22" height="60" rx="6" fill="#f97316" opacity="0.8" />
+    
+      <rect x="832" y="485" width="22" height="95" rx="6" fill="#f97316" opacity="1" />
+    
+      <rect x="874" y="450" width="22" height="130" rx="6" fill="#f97316" opacity="0.4" />
+    
+      <rect x="916" y="415" width="22" height="165" rx="6" fill="#f97316" opacity="0.6000000000000001" />
+    
+      <rect x="958" y="380" width="22" height="200" rx="6" fill="#f97316" opacity="0.8" />
+    
+      <rect x="1000" y="520" width="22" height="60" rx="6" fill="#f97316" opacity="1" />
+    
+
+    <circle cx="710" cy="700" r="32" fill="#f97316" filter="url(#glow)" />
+    <polygon points="705,688 722,700 705,712" fill="#000" />
+    <rect x="325" y="770" width="770" height="8" rx="4" fill="rgba(255,255,255,0.1)" />
+    <rect x="325" y="770" width="480" height="8" rx="4" fill="#f97316" />
+
+    <rect x="1165" y="220" width="360" height="620" rx="16" fill="rgba(18,21,34,0.85)" stroke="rgba(255,255,255,0.08)" />
+    <text x="1195" y="260" fill="#ffffff" font-size="16" font-weight="800">MEDIA STREAM QUEUE</text>
+    
+      <rect x="1195" y="350" width="300" height="52" rx="8" fill="rgba(255,255,255,0.03)" />
+      <text x="1215" y="382" fill="#ffffff" font-size="13" font-weight="600">Track 01 - Positive Energy Stream</text>
+    
+      <rect x="1195" y="415" width="300" height="52" rx="8" fill="rgba(255,255,255,0.03)" />
+      <text x="1215" y="447" fill="#ffffff" font-size="13" font-weight="600">Track 02 - Positive Energy Stream</text>
+    
+      <rect x="1195" y="480" width="300" height="52" rx="8" fill="rgba(255,255,255,0.03)" />
+      <text x="1215" y="512" fill="#ffffff" font-size="13" font-weight="600">Track 03 - Positive Energy Stream</text>
+    
+      <rect x="1195" y="545" width="300" height="52" rx="8" fill="rgba(255,255,255,0.03)" />
+      <text x="1215" y="577" fill="#ffffff" font-size="13" font-weight="600">Track 04 - Positive Energy Stream</text>
+    
+      <rect x="1195" y="610" width="300" height="52" rx="8" fill="rgba(255,255,255,0.03)" />
+      <text x="1215" y="642" fill="#ffffff" font-size="13" font-weight="600">Track 05 - Positive Energy Stream</text>
+    
+  </g>
+</svg>

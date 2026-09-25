@@ -125,20 +125,18 @@ export function Services() {
       const n = { v: 0 };
       gsap.to(n, {
         v: SERVICES.length,
-        duration: 1.6,
+        duration: 1.2,
         ease: "expo.out",
         onUpdate: () => {
           if (counter.current) counter.current.textContent = `[${Math.round(n.v)}]`;
         },
       });
 
-      gsap.from("[data-service]", {
-        opacity: 0,
-        y: 40,
-        duration: 0.8,
-        ease: "expo.out",
-        stagger: 0.08,
-      });
+      gsap.fromTo(
+        "[data-service]",
+        { opacity: 0.4, y: 24 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "expo.out", stagger: 0.05 }
+      );
     }, grid);
     return () => ctx.revert();
   }, []);
@@ -146,12 +144,12 @@ export function Services() {
   useEffect(() => {
     if (!state.current || !grid.current) return;
     Flip.from(state.current, {
-      duration: 0.7,
+      duration: 0.5,
       ease: "expo.inOut",
-      scale: true,
-      absolute: true,
-      onEnter: (els) => gsap.fromTo(els, { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.5 }),
-      onLeave: (els) => gsap.to(els, { opacity: 0, scale: 0.85, duration: 0.35 }),
+      scale: false,
+      absolute: false,
+      onEnter: (els) => gsap.fromTo(els, { opacity: 0 }, { opacity: 1, duration: 0.4 }),
+      onLeave: (els) => gsap.to(els, { opacity: 0, duration: 0.3 }),
     });
   }, [filter]);
 

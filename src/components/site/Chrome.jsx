@@ -108,6 +108,17 @@ function Menu() {
   };
 
   useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  useEffect(() => {
     const el = panel.current;
     if (!el) return;
     const items = Array.from(el.querySelectorAll("[data-menu-item]"));
@@ -210,24 +221,26 @@ function Menu() {
         data-cursor="link"
         aria-expanded={open}
         aria-label="Menu"
-        className="relative z-[86] flex h-11 w-11 flex-col items-center justify-center gap-[6px] rounded-full border border-border"
+        className="relative z-[90] flex h-11 w-11 items-center justify-center rounded-full border border-border bg-background/80 backdrop-blur-md"
       >
-        <span
-          className="block h-px w-4 bg-foreground transition-transform duration-300"
-          style={open ? { transform: "translateY(3.5px) rotate(45deg)" } : undefined}
-        />
-        <span
-          className="block h-px w-4 bg-foreground transition-transform duration-300"
-          style={open ? { transform: "translateY(-3.5px) rotate(-45deg)" } : undefined}
-        />
+        <div className="relative h-3 w-4 flex flex-col justify-between items-center">
+          <span
+            className="block h-[1.5px] w-4 bg-foreground transition-all duration-300 origin-center"
+            style={open ? { transform: "translateY(5.25px) rotate(45deg)" } : undefined}
+          />
+          <span
+            className="block h-[1.5px] w-4 bg-foreground transition-all duration-300 origin-center"
+            style={open ? { transform: "translateY(-5.25px) rotate(-45deg)" } : undefined}
+          />
+        </div>
       </button>
 
       <div
         ref={panel}
-        className="pointer-events-none fixed inset-0 z-[85] flex flex-col justify-center bg-background px-6 md:px-12"
+        className="pointer-events-none fixed inset-0 z-[85] flex flex-col justify-between overflow-y-auto bg-background/98 backdrop-blur-2xl px-6 py-24 md:px-12 md:py-28"
         style={{ clipPath: "inset(0% 0% 100% 0%)" }}
       >
-        <nav className="flex flex-col" aria-label="Primary">
+        <nav className="flex flex-col my-auto" aria-label="Primary">
           {NAV.map((item, i) => {
             const isActive =
               (item.to === "/" && pathname === "/" && !item.hash) ||
@@ -242,9 +255,9 @@ function Menu() {
                   hash={item.hash || undefined}
                   onClick={(e) => handleClick(e, item)}
                   aria-current={isActive ? "page" : undefined}
-                  className="display relative inline-block py-1 text-[clamp(3rem,11vw,9rem)] text-foreground transition-opacity hover:opacity-45"
+                  className="display relative inline-block py-2 text-[clamp(2.5rem,7vw,7rem)] text-foreground transition-opacity hover:opacity-45"
                 >
-                  <span className="font-mono-alt mr-4 align-super text-[0.9rem] tracking-widest text-muted-foreground">
+                  <span className="font-mono-alt mr-4 align-super text-[0.8rem] tracking-widest text-muted-foreground">
                     0{i + 1}
                   </span>
                   {item.label}
@@ -259,14 +272,15 @@ function Menu() {
             );
           })}
         </nav>
-        <div className="font-mono-alt mt-12 flex flex-wrap gap-8 text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
-          <a data-cursor="link" href="mailto:abhishektiwari1540@gmail.com">
+
+        <div className="font-mono-alt mt-8 flex flex-wrap items-center gap-6 border-t border-border/30 pt-6 text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
+          <a data-cursor="link" href="mailto:abhishektiwari1540@gmail.com" className="text-foreground hover:text-accent transition-colors">
             abhishektiwari1540@gmail.com
           </a>
-          <a data-cursor="link" href="https://linkedin.com" target="_blank" rel="noreferrer">
+          <a data-cursor="link" href="https://linkedin.com" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">
             LinkedIn
           </a>
-          <a data-cursor="link" href="https://github.com" target="_blank" rel="noreferrer">
+          <a data-cursor="link" href="https://github.com" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">
             GitHub
           </a>
         </div>

@@ -392,8 +392,12 @@ function Approach() {
 
   useEffect(() => {
     registerGsap();
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) return;
+
     const ctx = gsap.context(() => {
       const el = track.current;
+      if (!el || !section.current) return;
       gsap.to(el, {
         x: () => -(el.scrollWidth - window.innerWidth + 48),
         ease: "none",
@@ -411,20 +415,19 @@ function Approach() {
   }, []);
 
   return (
-    <section ref={section} className="relative h-screen overflow-hidden border-y border-border/40 bg-card/20">
-      <div ref={track} className="flex h-full w-max items-center gap-8 px-6 md:px-10">
-        <div className="display w-[70vw] shrink-0 text-[clamp(3rem,10vw,9rem)] md:w-[45vw]">
+    <section ref={section} className="relative py-16 md:py-0 md:h-screen md:overflow-hidden border-y border-border/40 bg-card/20">
+      <div ref={track} className="flex flex-col md:flex-row md:h-full md:w-max items-start md:items-center gap-8 px-6 md:px-10">
+        <div className="display text-3xl sm:text-4xl md:text-[clamp(3rem,10vw,9rem)] md:w-[45vw] font-bold">
           My
-          <br />
-          approach
+          <span className="inline md:block"> approach</span>
         </div>
         {APPROACH.map((a) => (
           <article
             key={a.no}
-            className="group relative flex h-[68vh] w-[85vw] shrink-0 flex-col justify-between overflow-hidden rounded-3xl border border-white/15 bg-card/80 backdrop-blur-md p-7 md:w-[40vw] transition-all duration-500 hover:border-accent hover:shadow-[0_25px_60px_-15px_rgba(0,220,255,0.3)]"
+            className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-white/15 bg-card/80 backdrop-blur-md p-6 sm:p-7 w-full md:w-[40vw] md:h-[68vh] transition-all duration-500 hover:border-accent hover:shadow-[0_25px_60px_-15px_rgba(0,220,255,0.3)]"
           >
             {/* Background Graphic Preview */}
-            <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-white/10 bg-black group-hover:border-accent/40 transition-colors">
+            <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden rounded-2xl border border-white/10 bg-black group-hover:border-accent/40 transition-colors">
               <img
                 src={a.image}
                 alt={`${a.title} approach graphic`}
@@ -436,15 +439,15 @@ function Approach() {
               </div>
             </div>
 
-            <div className="space-y-3 pt-4">
+            <div className="space-y-2 sm:space-y-3 pt-4">
               <div className="flex items-center justify-between">
-                <h3 className="display text-2xl md:text-4xl text-foreground group-hover:text-accent transition-colors duration-300">
+                <h3 className="display text-xl sm:text-2xl md:text-4xl text-foreground group-hover:text-accent transition-colors duration-300">
                   {a.title}
                 </h3>
                 <span className="h-2.5 w-2.5 rounded-full bg-accent animate-pulse" />
               </div>
 
-              <p className="text-sm md:text-base leading-relaxed text-muted-foreground group-hover:text-foreground/90 transition-colors duration-300">
+              <p className="text-xs sm:text-sm md:text-base leading-relaxed text-muted-foreground group-hover:text-foreground/90 transition-colors duration-300">
                 {a.body}
               </p>
             </div>

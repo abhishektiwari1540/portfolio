@@ -40,9 +40,9 @@ function Social({ label, href }) {
       target="_blank"
       rel="noreferrer"
       data-cursor="link"
-      className="flex h-44 w-44 items-center justify-center rounded-full border border-border md:h-56 md:w-56 transition-colors hover:border-accent hover:text-accent"
+      className="flex h-28 w-28 md:h-56 md:w-56 items-center justify-center rounded-full border border-border transition-colors hover:border-accent hover:text-accent"
     >
-      <span ref={icon} className="font-mono-alt text-sm uppercase tracking-[0.25em]">
+      <span ref={icon} className="font-mono-alt text-xs md:text-sm uppercase tracking-[0.25em]">
         {label}
       </span>
     </a>

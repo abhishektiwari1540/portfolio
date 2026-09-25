@@ -48,8 +48,12 @@ export function Work() {
 
   useEffect(() => {
     registerGsap();
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) return;
+
     const ctx = gsap.context(() => {
       const el = track.current;
+      if (!el || !section.current) return;
 
       const horizontal = gsap.to(el, {
         x: () => -(el.scrollWidth - window.innerWidth + 48),
@@ -108,25 +112,25 @@ export function Work() {
 
   return (
     <main className="grain">
-      <section className="flex min-h-[70vh] items-end px-6 pb-16 pt-40 md:px-10">
+      <section className="flex min-h-[50vh] md:min-h-[70vh] items-end px-6 pb-12 pt-32 md:px-10 md:pb-16 md:pt-40">
         <div>
-          <p className="font-mono-alt mb-6 text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
+          <p className="font-mono-alt mb-4 md:mb-6 text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
             [{PROJECTS.length}] projects — 2022 to now
           </p>
-          <h1 ref={header} className="display text-[clamp(3rem,12vw,13rem)]">
+          <h1 ref={header} className="display text-[clamp(2.8rem,12vw,13rem)] leading-[0.9]">
             Selected work
           </h1>
         </div>
       </section>
 
-      <section ref={section} className="relative h-screen overflow-hidden">
-        <div ref={track} className="flex h-full w-max items-center gap-8 px-6 md:px-10">
+      <section ref={section} className="relative py-8 md:py-0 md:h-screen md:overflow-hidden">
+        <div ref={track} className="flex flex-col md:flex-row md:h-full md:w-max items-center gap-12 md:gap-8 px-6 md:px-10">
           {PROJECTS.map((p, i) => (
             <article
               key={p.name}
               data-card
               onClick={() => openProjectModal(p)}
-              className="w-[86vw] shrink-0 md:w-[62vw] group cursor-pointer"
+              className="w-full md:w-[62vw] shrink-0 group cursor-pointer"
             >
               <div
                 data-cursor="view"
@@ -140,26 +144,26 @@ export function Work() {
                     loading="lazy"
                     width={1400}
                     height={1000}
-                    className="h-full w-full scale-[1.18] object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.08]"
+                    className="h-full w-full scale-[1.05] md:scale-[1.18] object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.08]"
                   />
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/75 via-transparent to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-30" />
                 </div>
               </div>
-              <div className="mt-6 flex flex-wrap items-end justify-between gap-6">
+              <div className="mt-5 flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6">
                 <div>
-                  <h2 className="display text-[clamp(1.8rem,4.4vw,3.4rem)] flex items-baseline">
-                    <span className="font-mono-alt mr-4 text-[0.8rem] tracking-widest text-accent">
+                  <h2 className="display text-2xl sm:text-3xl md:text-[clamp(1.8rem,4.4vw,3.4rem)] flex items-baseline">
+                    <span className="font-mono-alt mr-3 md:mr-4 text-xs md:text-[0.8rem] tracking-widest text-accent font-bold">
                       0{i + 1}
                     </span>
                     <span className="transition-colors duration-300 group-hover:text-accent">
                       {p.name}
                     </span>
                   </h2>
-                  <p className="mt-3 max-w-[48ch] text-sm leading-relaxed text-muted-foreground">
+                  <p className="mt-2 text-xs sm:text-sm leading-relaxed text-muted-foreground max-w-[48ch]">
                     {p.blurb}
                   </p>
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1.5 md:gap-2">
                   {p.tags.map((t) => (
                     <Tag key={t} label={t} />
                   ))}

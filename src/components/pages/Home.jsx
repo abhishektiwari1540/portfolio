@@ -463,24 +463,24 @@ function ServicesSection() {
       const n = { v: 0 };
       gsap.to(n, {
         v: SERVICES.length,
-        duration: okDecorative() ? 1.6 : 0.2,
+        duration: okDecorative() ? 1.2 : 0.2,
         ease: okDecorative() ? "expo.out" : "none",
         onUpdate: () => {
           if (counter.current) counter.current.textContent = `[${Math.round(n.v)}]`;
         },
       });
-      if (okDecorative()) {
-        gsap.from("[data-service]", {
-          opacity: 0,
-          y: 60,
-          duration: 1,
-          ease: "expo.out",
-          stagger: { each: 0.07, from: "random" },
-          scrollTrigger: { trigger: section.current, start: "top 88%", once: true },
-        });
-      } else {
-        gsap.set("[data-service]", { opacity: 1, y: 0 });
-      }
+      gsap.fromTo(
+        "[data-service]",
+        { opacity: 0.4, y: 24 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          ease: "power2.out",
+          stagger: 0.05,
+          scrollTrigger: { trigger: section.current, start: "top 92%", once: true },
+        }
+      );
     }, section);
     return () => ctx.revert();
   }, []);
@@ -488,12 +488,12 @@ function ServicesSection() {
   useEffect(() => {
     if (!state.current || !grid.current) return;
     Flip.from(state.current, {
-      duration: okDecorative() ? 0.7 : 0.2,
+      duration: okDecorative() ? 0.5 : 0.2,
       ease: okDecorative() ? "expo.inOut" : "none",
-      scale: true,
-      absolute: true,
-      onEnter: (els) => gsap.fromTo(els, { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.5 }),
-      onLeave: (els) => gsap.to(els, { opacity: 0, scale: 0.85, duration: 0.35 }),
+      scale: false,
+      absolute: false,
+      onEnter: (els) => gsap.fromTo(els, { opacity: 0 }, { opacity: 1, duration: 0.4 }),
+      onLeave: (els) => gsap.to(els, { opacity: 0, duration: 0.3 }),
     });
   }, [filter]);
 
@@ -510,8 +510,8 @@ function ServicesSection() {
           <h1 ref={title} className="display text-[clamp(2.4rem,10vw,11rem)] leading-[0.9]">
             Services
           </h1>
-          <span ref={counter} className="font-mono-alt mt-3 text-sm tracking-[0.2em] text-accent">
-            [0]
+          <span ref={counter} className="font-mono-alt mt-3 text-sm tracking-[0.2em] text-accent font-bold">
+            [{SERVICES.length}]
           </span>
         </div>
         <div className="flex flex-wrap gap-3">
@@ -547,7 +547,7 @@ function ServicesSection() {
             key={s.title}
             data-service
             data-cursor="link"
-            className={`group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border/60 bg-card/60 backdrop-blur-md p-6 transition-all duration-500 will-change-transform hover:border-accent hover:bg-card/90 hover:shadow-[0_15px_40px_-10px_rgba(0,220,255,0.25)] md:p-8 ${s.span}`}
+            className={`group relative flex flex-col justify-between rounded-2xl border border-border/60 bg-card/60 backdrop-blur-md p-6 transition-all duration-300 hover:border-accent hover:bg-card/90 hover:shadow-[0_15px_40px_-10px_rgba(0,220,255,0.25)] md:p-8 ${s.span}`}
           >
             <div className="space-y-3">
               <div className="flex items-center justify-between">
@@ -614,9 +614,9 @@ function ContactSocial({ label, href }) {
       target="_blank"
       rel="noreferrer"
       data-cursor="link"
-      className="flex h-44 w-44 items-center justify-center rounded-full border border-border md:h-56 md:w-56 will-change-transform"
+      className="flex h-28 w-28 md:h-56 md:w-56 items-center justify-center rounded-full border border-border will-change-transform transition-colors hover:border-accent hover:text-accent"
     >
-      <span ref={icon} className="font-mono-alt text-sm uppercase tracking-[0.25em]">
+      <span ref={icon} className="font-mono-alt text-xs md:text-sm uppercase tracking-[0.25em]">
         {label}
       </span>
     </a>

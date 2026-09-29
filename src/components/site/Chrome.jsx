@@ -175,28 +175,29 @@ function Menu() {
       if (!open) return;
     }
     const items = el.querySelectorAll("[data-menu-item]");
+    gsap.killTweensOf([el, ...items]);
     if (open) {
       gsap
         .timeline()
         .set(el, { pointerEvents: "auto" })
-        .to(el, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.85, ease: "expo.inOut" })
+        .to(el, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.5, ease: "power3.out" })
         .to(
           items,
-          { yPercent: 0, opacity: 1, duration: 0.8, stagger: 0.06, ease: "expo.out" },
-          "-=0.4",
+          { yPercent: 0, opacity: 1, duration: 0.5, stagger: 0.05, ease: "power3.out" },
+          "-=0.3",
         );
     } else {
       gsap
         .timeline()
-        .to(items, { yPercent: -120, opacity: 0, duration: 0.45, stagger: 0.04, ease: "expo.in" })
+        .to(items, { yPercent: -100, opacity: 0, duration: 0.3, stagger: 0.03, ease: "power2.in" })
         .to(
           el,
           {
             clipPath: "inset(0% 0% 100% 0%)",
-            duration: 0.6,
-            ease: "expo.inOut",
+            duration: 0.4,
+            ease: "power3.inOut",
           },
-          "-=0.3",
+          "-=0.2",
         )
         .add(() => gsap.set(el, { pointerEvents: "none" }));
     }
@@ -244,10 +245,10 @@ function Menu() {
 
       <div
         ref={panel}
-        className="pointer-events-none fixed inset-0 z-[85] flex flex-col justify-between overflow-y-auto bg-background/98 backdrop-blur-2xl px-6 py-24 md:px-12 md:py-28"
+        className="pointer-events-none fixed inset-0 h-[100dvh] w-screen z-[85] flex flex-col justify-between overflow-y-auto bg-background/98 backdrop-blur-2xl px-6 pt-20 pb-8 md:px-12 md:py-24"
         style={{ clipPath: "inset(0% 0% 100% 0%)" }}
       >
-        <nav className="flex flex-col my-auto" aria-label="Primary">
+        <nav className="flex flex-col my-auto space-y-1 md:space-y-2" aria-label="Primary">
           {NAV.map((item, i) => {
             const isActive =
               (item.to === "/" && pathname === "/" && !item.hash) ||
@@ -262,9 +263,9 @@ function Menu() {
                   hash={item.hash || undefined}
                   onClick={(e) => handleClick(e, item)}
                   aria-current={isActive ? "page" : undefined}
-                  className="display relative inline-block py-2 text-[clamp(2.5rem,7vw,7rem)] text-foreground transition-opacity hover:opacity-45"
+                  className="display relative inline-block py-1 md:py-2 text-[clamp(2.2rem,6.5vw,6.5rem)] text-foreground transition-opacity hover:opacity-45"
                 >
-                  <span className="font-mono-alt mr-4 align-super text-[0.8rem] tracking-widest text-muted-foreground">
+                  <span className="font-mono-alt mr-3 md:mr-4 align-super text-[0.75rem] md:text-[0.8rem] tracking-widest text-muted-foreground">
                     0{i + 1}
                   </span>
                   {item.label}

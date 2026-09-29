@@ -9,7 +9,6 @@ const NAV = [
   { to: "/", label: "Home", hash: null },
   { to: "/", label: "Work", hash: "work" },
   { to: "/about", label: "About", hash: null },
-  { to: "/blog", label: "Blog", hash: null },
   { to: "/", label: "Contact", hash: "contact" },
 ];
 

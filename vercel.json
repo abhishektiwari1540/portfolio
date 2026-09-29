@@ -1,35 +1,7 @@
 {
-  "redirects": [
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.abhishektiwari.online"
-        }
-      ],
-      "destination": "https://abhishektiwari.online/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": ".*\\.vercel\\.app"
-        }
-      ],
-      "destination": "https://abhishektiwari.online/:path*",
-      "permanent": true
-    }
-  ],
   "rewrites": [
     {
-      "source": "/api/revalidate",
-      "destination": "/api/revalidate.js"
-    },
-    {
-      "source": "/((?!api/).*)",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ]

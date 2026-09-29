@@ -2,12 +2,6 @@ import { useEffect } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Home } from "@/components/pages/Home";
 
-const CANONICAL_URL = "https://abhishektiwari.online/work";
-const TITLE = "Work | Abhishek Tiwari - Full Stack & AI Backend Engineer";
-const DESCRIPTION =
-  "Full-Stack & Backend Engineer specializing in Node.js, TypeScript, Laravel, and Gemini Multimodal AI systems. Selected projects: TennisKhelo, RichestLife, IDMitra, SafeGent, and GHP Jaipur.";
-const OG_IMAGE = "https://abhishektiwari.online/og-image.png";
-
 function WorkRedirect() {
   const navigate = useNavigate();
   useEffect(() => {
@@ -19,20 +13,18 @@ function WorkRedirect() {
 export const Route = createFileRoute("/work")({
   head: () => ({
     meta: [
-      { title: TITLE },
-      { name: "description", content: DESCRIPTION },
-      { property: "og:title", content: TITLE },
-      { property: "og:description", content: DESCRIPTION },
-      { property: "og:url", content: CANONICAL_URL },
-      { property: "og:type", content: "website" },
-      { property: "og:image", content: OG_IMAGE },
-      { property: "og:site_name", content: "Abhishek Tiwari Portfolio" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: TITLE },
-      { name: "twitter:description", content: DESCRIPTION },
-      { name: "twitter:image", content: OG_IMAGE },
+      { title: "Work — Abhishek Tiwari" },
+      {
+        name: "description",
+        content:
+          "Selected projects by Abhishek Tiwari: TennisKhelo, RichestLife, IDMitra, SafeGent and GHP Jaipur.",
+      },
+      { property: "og:title", content: "Work — Abhishek Tiwari" },
+      {
+        property: "og:description",
+        content: "Booking platforms, finance dashboards, identity workflows and realtime consoles.",
+      },
     ],
-    links: [{ rel: "canonical", href: CANONICAL_URL }],
   }),
   component: WorkRedirect,
 });

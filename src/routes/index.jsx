@@ -1,29 +1,21 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Home } from "@/components/pages/Home";
 
-const CANONICAL_URL = "https://abhishektiwari.online";
-const TITLE = "Abhishek Tiwari | Full Stack & AI Backend Engineer";
-const DESCRIPTION =
-  "Full-Stack & Backend Engineer specializing in Node.js, TypeScript, Laravel, and Gemini Multimodal AI systems.";
-const OG_IMAGE = "https://abhishektiwari.online/og-image.png";
-
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: TITLE },
-      { name: "description", content: DESCRIPTION },
-      { property: "og:title", content: TITLE },
-      { property: "og:description", content: DESCRIPTION },
-      { property: "og:url", content: CANONICAL_URL },
-      { property: "og:type", content: "website" },
-      { property: "og:image", content: OG_IMAGE },
-      { property: "og:site_name", content: "Abhishek Tiwari Portfolio" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: TITLE },
-      { name: "twitter:description", content: DESCRIPTION },
-      { name: "twitter:image", content: OG_IMAGE },
+      { title: "Abhishek Tiwari — Full Stack Developer" },
+      {
+        name: "description",
+        content:
+          "Full stack developer building booking platforms, fintech dashboards and identity systems with React, Node, Laravel and AI.",
+      },
+      { property: "og:title", content: "Abhishek Tiwari — Full Stack Developer" },
+      {
+        property: "og:description",
+        content: "Selected work, services and contact for full stack developer Abhishek Tiwari.",
+      },
     ],
-    links: [{ rel: "canonical", href: CANONICAL_URL }],
   }),
   component: Home,
 });

@@ -74,10 +74,10 @@ export function Footer({ invert = false }) {
           <span className="opacity-60">Open to full stack roles &amp; freelance builds</span>
         </div>
         <div className="flex gap-6">
-          <a data-cursor="link" href="https://linkedin.com" target="_blank" rel="noreferrer">
+          <a data-cursor="link" href="https://linkedin.com/in/abhishektiwari1540" target="_blank" rel="noopener noreferrer">
             LinkedIn
           </a>
-          <a data-cursor="link" href="https://github.com" target="_blank" rel="noreferrer">
+          <a data-cursor="link" href="https://github.com/abhishektiwari1540" target="_blank" rel="noopener noreferrer">
             GitHub
           </a>
           <Link data-cursor="link" to="/" hash="contact">

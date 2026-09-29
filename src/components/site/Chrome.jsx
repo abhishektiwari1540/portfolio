@@ -165,9 +165,15 @@ function Menu() {
     };
   }, []);
 
+  const isFirstRender = useRef(true);
+
   useEffect(() => {
     const el = panel.current;
     if (!el) return;
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      if (!open) return;
+    }
     const items = el.querySelectorAll("[data-menu-item]");
     if (open) {
       gsap
@@ -217,11 +223,12 @@ function Menu() {
     <>
       <button
         ref={btn}
+        type="button"
         onClick={() => setOpen((o) => !o)}
         data-cursor="link"
         aria-expanded={open}
         aria-label="Menu"
-        className="relative z-[90] flex h-11 w-11 items-center justify-center rounded-full border border-border bg-background/80 backdrop-blur-md"
+        className="relative z-[90] flex h-11 w-11 items-center justify-center rounded-full border border-border bg-background/80 backdrop-blur-md touch-manipulation"
       >
         <div className="relative h-3 w-4 flex flex-col justify-between items-center">
           <span
@@ -277,10 +284,10 @@ function Menu() {
           <a data-cursor="link" href="mailto:abhishektiwari1540@gmail.com" className="text-foreground hover:text-accent transition-colors">
             abhishektiwari1540@gmail.com
           </a>
-          <a data-cursor="link" href="https://linkedin.com" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">
+          <a data-cursor="link" href="https://linkedin.com/in/abhishektiwari1540" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
             LinkedIn
           </a>
-          <a data-cursor="link" href="https://github.com" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">
+          <a data-cursor="link" href="https://github.com/abhishektiwari1540" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
             GitHub
           </a>
         </div>

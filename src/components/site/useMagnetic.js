@@ -6,6 +6,9 @@ export function useMagnetic(strength = 0.4, tilt = true) {
   const ref = useRef(null);
 
   useEffect(() => {
+    if (typeof window !== "undefined" && (window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 768)) {
+      return;
+    }
     const el = ref.current;
     if (!el) return;
 

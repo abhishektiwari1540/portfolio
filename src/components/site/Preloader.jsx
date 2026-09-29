@@ -126,15 +126,15 @@ export function Preloader({ onDone }) {
   };
 
   const topBottomText = useMemo(
-    () => makeTextPanel(MERN_SNIPPETS, 30),
+    () => makeTextPanel(MERN_SNIPPETS, 1),
     [],
   );
   const leftRightText = useMemo(
-    () => makeTextPanel(MERN_SNIPPETS, 40),
+    () => makeTextPanel(MERN_SNIPPETS, 1),
     [],
   );
   const borderText = useMemo(
-    () => makeBorderText(MERN_SNIPPETS.slice(0, 8), 12, 16),
+    () => makeBorderText(MERN_SNIPPETS.slice(0, 3), 1, 1),
     [],
   );
 
@@ -775,7 +775,7 @@ export function Preloader({ onDone }) {
         <div className="pointer-events-none absolute inset-0 z-[35] flex flex-col items-center justify-center">
           <div
             ref={terminal}
-            className="absolute inset-0 overflow-hidden font-mono-alt text-[11px] leading-[1.9] text-foreground/15 opacity-0"
+            data-nosnippet="true" aria-hidden="true" className="absolute inset-0 overflow-hidden font-mono-alt text-[11px] leading-[1.9] text-foreground/15 opacity-0"
           >
             {Array.from({ length: 6 }).map((_, col) => (
               <div

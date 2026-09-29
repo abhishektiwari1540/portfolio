@@ -1,0 +1,27 @@
+# Abhishek Tiwari - Full Stack Developer
+
+> Senior Full Stack & AI Developer specializing in building high-performance web platforms, real-time engines, booking platforms, fintech dashboards, and identity systems with React, Node.js, Laravel, and AI integration.
+
+## About
+- **Name**: Abhishek Tiwari
+- **Role**: Full Stack & AI Software Engineer
+- **Website**: https://www.abhishektiwari.online/
+- **LinkedIn**: https://linkedin.com/in/abhishektiwari1540
+- **GitHub**: https://github.com/abhishektiwari1540
+- **Email**: abhishektiwari1540@gmail.com
+
+## Technical Stack
+- **Frontend**: React 19, TypeScript, Next.js, Vite, Tailwind CSS, GSAP, Lenis Smooth Scroll
+- **Backend**: Node.js, Express, Laravel (PHP), Python, REST APIs, GraphQL, WebSockets
+- **Database**: PostgreSQL, Supabase, MongoDB, Redis, MySQL
+- **AI & Automation**: Gemini API, OpenAI Embeddings, ADK Agents, Vector Databases
+- **DevOps & Infrastructure**: Docker, Kubernetes, Vercel, GCP, CI/CD pipelines
+
+## Key Featured Projects
+1. **TennisKhelo Platform**: Multi-tenant sports tournament management and real-time booking engine.
+2. **RichestLife Fintech Dashboard**: High-concurrency financial analytics and portfolio tracking dashboard.
+3. **ID Cards & Security Verification Engine**: High-throughput identity verification and badge generator system.
+4. **Career Digest**: Automated daily career intelligence digest powered by Supabase & Gemini AI.
+
+## Contact
+Available for freelance projects, technical consulting, and full-time software engineering roles.

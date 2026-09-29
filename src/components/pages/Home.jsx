@@ -138,7 +138,7 @@ function Hero() {
       className="relative flex h-screen items-center overflow-hidden px-6 md:px-10"
     >
       <div ref={lockup} className="w-full will-change-transform grid grid-cols-1 md:grid-cols-12 items-center gap-8">
-        <div className="md:col-span-8">
+        <h1 className="md:col-span-8">
           <span className="mask-line">
             <span ref={l1} className="display block whitespace-nowrap text-[clamp(2.6rem,8.5vw,11rem)]">
               Full Stack
@@ -149,7 +149,7 @@ function Hero() {
               Developer
             </span>
           </span>
-        </div>
+        </h1>
 
         <div className="md:col-span-4 flex flex-col items-start gap-4 border-l border-border/40 pl-6 md:pl-10">
           <div className="flex items-center gap-2.5 rounded-full border border-border/60 bg-card/60 px-4 py-1.5 backdrop-blur-md">
@@ -507,9 +507,9 @@ function ServicesSection() {
     <section ref={section} id="services" className="scroll-mt-24 px-6 py-28 md:px-10">
       <div className="flex flex-col justify-end gap-8 pb-14 md:flex-row md:items-end md:justify-between">
         <div className="flex items-start gap-6">
-          <h1 ref={title} className="display text-[clamp(2.4rem,10vw,11rem)] leading-[0.9]">
+          <h2 ref={title} className="display text-[clamp(2.4rem,10vw,11rem)] leading-[0.9]">
             Services
-          </h1>
+          </h2>
           <span ref={counter} className="font-mono-alt mt-3 text-sm tracking-[0.2em] text-accent font-bold">
             [{SERVICES.length}]
           </span>
@@ -698,7 +698,7 @@ function ContactSection() {
   return (
     <section ref={section} id="contact" className="scroll-mt-24 overflow-hidden px-6 py-28 md:px-10">
       <section ref={hero} className="flex min-h-[70vh] flex-col justify-center gap-16 pt-10">
-        <h1 className="display flex flex-wrap text-[clamp(2.6rem,11.5vw,12rem)] leading-[0.9]">
+        <h2 className="display flex flex-wrap text-[clamp(2.6rem,11.5vw,12rem)] leading-[0.9]">
           {CONTACT_HEADLINE.split("").map((ch, i) => (
             <span key={i} className="mask-line">
               <span data-hchar className="inline-block will-change-transform">
@@ -706,7 +706,7 @@ function ContactSection() {
               </span>
             </span>
           ))}
-        </h1>
+        </h2>
 
         <div className="flex flex-col items-center gap-6 py-10">
           <p className="font-mono-alt text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
@@ -740,8 +740,8 @@ function ContactSection() {
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-8 pb-8">
-          <ContactSocial label="LinkedIn" href="https://linkedin.com" />
-          <ContactSocial label="GitHub" href="https://github.com" />
+          <ContactSocial label="LinkedIn" href="https://linkedin.com/in/abhishektiwari1540" />
+          <ContactSocial label="GitHub" href="https://github.com/abhishektiwari1540" />
         </div>
       </section>
     </section>

@@ -639,7 +639,8 @@ export function RouteHoverTransition({ children }) {
             }}
             data-cursor="link"
             aria-label="Close preview"
-            className="pointer-events-auto absolute right-6 top-6 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-md transition-all duration-300 hover:scale-110 hover:border-white hover:bg-black/90 focus:outline-none"
+            tabIndex={-1}
+            className="absolute right-6 top-6 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-md transition-all duration-300 hover:scale-110 hover:border-white hover:bg-black/90 focus:outline-none"
           >
             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />

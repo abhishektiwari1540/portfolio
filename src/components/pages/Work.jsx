@@ -68,23 +68,25 @@ export function Work() {
         },
       });
 
-      gsap.utils.toArray("[data-card] [data-reveal]").forEach((img) => {
-        gsap.fromTo(
-          img,
-          { clipPath: "inset(0% 46% 0% 46%)" },
-          {
-            clipPath: "inset(0% 0% 0% 0%)",
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: img,
-              containerAnimation: horizontal,
-              start: "left 82%",
-              end: "center 55%",
-              scrub: true,
+      if (horizontal && horizontal.scrollTrigger) {
+        gsap.utils.toArray("[data-card] [data-reveal]").forEach((img) => {
+          gsap.fromTo(
+            img,
+            { clipPath: "inset(0% 46% 0% 46%)" },
+            {
+              clipPath: "inset(0% 0% 0% 0%)",
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: img,
+                containerAnimation: horizontal,
+                start: "left 82%",
+                end: "center 55%",
+                scrub: true,
+              },
             },
-          },
-        );
-      });
+          );
+        });
+      }
 
       gsap.utils.toArray("[data-card]").forEach((card) => {
         const inner = card.querySelector("[data-parallax]");

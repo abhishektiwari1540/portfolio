@@ -8,6 +8,7 @@ import { okDecorative } from "./motion";
 const NAV = [
   { to: "/", label: "Home", hash: null },
   { to: "/", label: "Work", hash: "work" },
+  { to: "/", label: "AI Digest", hash: "blog" },
   { to: "/about", label: "About", hash: null },
   { to: "/", label: "Contact", hash: "contact" },
 ];
@@ -285,7 +286,7 @@ function Menu() {
           <a data-cursor="link" href="mailto:abhishektiwari1540@gmail.com" className="text-foreground hover:text-accent transition-colors">
             abhishektiwari1540@gmail.com
           </a>
-          <a data-cursor="link" href="https://linkedin.com/in/abhishektiwari1540" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
+          <a data-cursor="link" href="https://www.linkedin.com/in/abhishektiwarii-dev/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
             LinkedIn
           </a>
           <a data-cursor="link" href="https://github.com/abhishektiwari1540" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">

@@ -152,7 +152,7 @@ export function Contact() {
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-8 pb-16">
-          <Social label="LinkedIn" href="https://linkedin.com/in/abhishektiwari1540" />
+          <Social label="LinkedIn" href="https://www.linkedin.com/in/abhishektiwarii-dev/" />
           <Social label="GitHub" href="https://github.com/abhishektiwari1540" />
         </div>
       </section>

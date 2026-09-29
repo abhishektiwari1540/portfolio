@@ -8,9 +8,9 @@ import { okDecorative } from "./motion";
 const NAV = [
   { to: "/", label: "Home", hash: null },
   { to: "/", label: "Work", hash: "work" },
-  { to: "/", label: "AI Digest", hash: "blog" },
   { to: "/about", label: "About", hash: null },
   { to: "/", label: "Contact", hash: "contact" },
+  { to: "/", label: "Blog", hash: "blog" },
 ];
 
 function ThemeToggle() {
@@ -341,11 +341,13 @@ function NavLink({ item, pathname, currentHash }) {
   const aboutActive = pathname === "/about";
   const workActive = currentHash === "work";
   const contactActive = currentHash === "contact";
+  const blogActive = currentHash === "blog";
   const active =
     (item.to === "/" && homeActive && !item.hash) ||
     (item.to === "/about" && aboutActive) ||
     (item.hash === "work" && workActive) ||
-    (item.hash === "contact" && contactActive);
+    (item.hash === "contact" && contactActive) ||
+    (item.hash === "blog" && blogActive);
   const ref = useMagnetic(0.28);
   const underline = useRef(null);
   const lenisRef = useRef(null);

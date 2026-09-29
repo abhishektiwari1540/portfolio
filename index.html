@@ -67,12 +67,33 @@
       ]
     }
     </script>
+    <!-- Critical Initial Styling to avoid FOUC (Flash of Unstyled Content) -->
+    <style>
+      html, body {
+        background-color: #0c0c0e;
+        color: #f2f2f2;
+        margin: 0;
+        padding: 0;
+      }
+      .seo-fallback {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        padding: 0 !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        clip: rect(0, 0, 0, 0) !important;
+        white-space: nowrap !important;
+        border: 0 !important;
+      }
+    </style>
   </head>
   <body>
     <div id="root">
       <!-- Fallback Content for Search Engines, SEO Bots & Non-JS Crawlers -->
-      <header>
-        <h1>Abhishek Tiwari — Full Stack Developer</h1>
+      <div class="seo-fallback">
+        <header>
+          <h1>Abhishek Tiwari — Full Stack Developer</h1>
         <p>
           Welcome to the official portfolio of Abhishek Tiwari. As a lead full stack developer and software engineer based in Jaipur, India, Abhishek Tiwari specializes in engineering high-concurrency web platforms, real-time booking engines, fintech dashboards, and automated AI workflow pipelines. With over 3 years of hands-on industry experience building production web applications for global clients, full stack developer Abhishek Tiwari brings deep expertise in React 19, Node.js, Laravel, TypeScript, MySQL database architecture, and cloud deployment pipelines.
         </p>
@@ -248,6 +269,7 @@
       <footer>
         <p>&copy; 2026 Abhishek Tiwari — Full Stack Developer. All rights reserved. Jaipur, India — Remote Worldwide.</p>
       </footer>
+      </div>
     </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

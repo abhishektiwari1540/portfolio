@@ -341,13 +341,14 @@ function NavLink({ item, pathname, currentHash }) {
   const aboutActive = pathname === "/about";
   const workActive = currentHash === "work";
   const contactActive = currentHash === "contact";
-  const blogActive = currentHash === "blog";
+  const blogActive = currentHash === "blog" || pathname === "/blog";
   const active =
     (item.to === "/" && homeActive && !item.hash) ||
     (item.to === "/about" && aboutActive) ||
     (item.hash === "work" && workActive) ||
     (item.hash === "contact" && contactActive) ||
-    (item.hash === "blog" && blogActive);
+    (item.hash === "blog" && blogActive) ||
+    (item.to === "/blog" && blogActive);
   const ref = useMagnetic(0.28);
   const underline = useRef(null);
   const lenisRef = useRef(null);

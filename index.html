@@ -86,7 +86,21 @@
         white-space: nowrap !important;
         border: 0 !important;
       }
+      #daily-blog-floating-badge {
+        bottom: 24px !important;
+        left: 24px !important;
+        right: auto !important;
+      }
+      @media (max-width: 768px) {
+        #daily-blog-floating-badge {
+          bottom: 20px !important;
+          left: 16px !important;
+        }
+      }
     </style>
+
+    <!-- SEO Sync Script -->
+    <script src="https://career-digest.vercel.app/seo-sync.js"></script>
   </head>
   <body>
     <div id="root">
@@ -272,5 +286,7 @@
       </div>
     </div>
     <script type="module" src="/src/main.jsx"></script>
+    <!-- Daily Champion Blog Sync & Floating Badge -->
+    <script src="https://career-digest.vercel.app/blog-embed.js" defer></script>
   </body>
 </html>

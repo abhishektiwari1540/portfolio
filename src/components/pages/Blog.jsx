@@ -1,6 +1,8 @@
 import { useEffect, useState, useMemo } from "react";
 import { Link } from "@tanstack/react-router";
 import { registerGsap } from "@/lib/gsap";
+import { useSplitReveal } from "@/components/site/useSplitReveal";
+import { Footer } from "@/components/site/Footer";
 
 function renderMarkdown(md) {
   if (!md) return "";
@@ -12,25 +14,25 @@ function renderMarkdown(md) {
     // Code blocks with syntax header and Copy button
     .replace(/```([a-zA-Z0-9_-]*)\n([\s\S]*?)```/g, (match, lang, code) => {
       const displayLang = lang || "code";
-      return `<div class="code-block-container my-6 rounded-2xl overflow-hidden border border-white/10 bg-[#06080e] shadow-xl">
-        <div class="flex items-center justify-between px-4 py-2.5 border-b border-white/10 bg-white/[0.03]">
+      return `<div class="code-block-container my-6 rounded-2xl overflow-hidden border border-border/60 bg-secondary/40 shadow-xl">
+        <div class="flex items-center justify-between px-4 py-2.5 border-b border-border/50 bg-card/60">
           <span class="text-[11px] font-mono text-accent uppercase tracking-wider font-semibold">${displayLang}</span>
-          <button type="button" data-copy-code class="copy-code-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 hover:bg-white/15 text-muted-foreground hover:text-foreground text-[10px] font-mono uppercase tracking-wider transition-all">
+          <button type="button" data-copy-code class="copy-code-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-secondary hover:bg-secondary/80 text-muted-foreground hover:text-foreground text-[10px] font-mono uppercase tracking-wider transition-all border border-border/40">
             <span>Copy</span>
           </button>
         </div>
-        <pre class="p-4 overflow-x-auto font-mono text-xs text-foreground/90 leading-relaxed"><code>${code}</code></pre>
+        <pre class="p-4 overflow-x-auto font-mono text-xs text-foreground/90 leading-relaxed bg-card/50"><code>${code}</code></pre>
       </div>`;
     })
     .replace(/```([\s\S]*?)```/g, (match, code) => {
-      return `<div class="code-block-container my-6 rounded-2xl overflow-hidden border border-white/10 bg-[#06080e] shadow-xl">
-        <div class="flex items-center justify-between px-4 py-2.5 border-b border-white/10 bg-white/[0.03]">
+      return `<div class="code-block-container my-6 rounded-2xl overflow-hidden border border-border/60 bg-secondary/40 shadow-xl">
+        <div class="flex items-center justify-between px-4 py-2.5 border-b border-border/50 bg-card/60">
           <span class="text-[11px] font-mono text-accent uppercase tracking-wider font-semibold">Snippet</span>
-          <button type="button" data-copy-code class="copy-code-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 hover:bg-white/15 text-muted-foreground hover:text-foreground text-[10px] font-mono uppercase tracking-wider transition-all">
+          <button type="button" data-copy-code class="copy-code-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-secondary hover:bg-secondary/80 text-muted-foreground hover:text-foreground text-[10px] font-mono uppercase tracking-wider transition-all border border-border/40">
             <span>Copy</span>
           </button>
         </div>
-        <pre class="p-4 overflow-x-auto font-mono text-xs text-foreground/90 leading-relaxed"><code>${code}</code></pre>
+        <pre class="p-4 overflow-x-auto font-mono text-xs text-foreground/90 leading-relaxed bg-card/50"><code>${code}</code></pre>
       </div>`;
     })
     // Inline code
@@ -125,6 +127,8 @@ export function Blog() {
   const [selectedTag, setSelectedTag] = useState("All");
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [copyFeedback, setCopyFeedback] = useState(false);
+
+  const header = useSplitReveal({ by: "words", scroll: false, stagger: 0.05 });
 
   useEffect(() => {
     registerGsap();
@@ -313,9 +317,10 @@ export function Blog() {
   const champCover = activeChampion.coverUrl || activeChampion.cover_url || FALLBACK_WINNERS[0].coverUrl;
 
   return (
-    <div className="min-h-screen bg-[#07090e] text-foreground pt-28 pb-32 px-6 md:px-12 selection:bg-accent/30 selection:text-accent">
-      <div className="max-w-7xl mx-auto">
-        {/* Breadcrumb Navigation */}
+    <main className="grain min-h-screen bg-background text-foreground selection:bg-accent/30 selection:text-accent">
+      {/* Hero Header Section */}
+      <section className="px-6 pb-10 pt-28 md:px-10 md:pb-14 md:pt-36 max-w-7xl mx-auto">
+        {/* Navigation Breadcrumb / Engine Status Bar */}
         <div className="flex items-center justify-between mb-8 pb-4 border-b border-border/40">
           <Link
             to="/"
@@ -332,35 +337,42 @@ export function Blog() {
           </div>
         </div>
 
-        {/* Hero Header */}
-        <div className="max-w-4xl mb-12">
-          <span className="font-mono-alt inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-4 py-1.5 text-[11px] uppercase tracking-[0.2em] text-accent">
+        {/* Hero Title & Subtitle */}
+        <div className="max-w-4xl">
+          <span className="font-mono-alt inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-4 py-1.5 text-[11px] uppercase tracking-[0.2em] text-accent mb-5">
             🏆 Daily AI Champion Blog Archive
           </span>
-          <h1 className="display mt-4 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-[1.08]">
+          <h1
+            ref={header}
+            className="display text-[clamp(2.5rem,7vw,6.5rem)] leading-[0.92] text-foreground tracking-tight"
+          >
             Architectural Deep Dives &amp; Technical Articles
           </h1>
-          <p className="mt-4 text-base sm:text-lg text-muted-foreground leading-relaxed font-sans max-w-3xl">
+          <p className="mt-6 text-base sm:text-lg text-muted-foreground leading-relaxed font-sans max-w-3xl">
             Each day, an automated 12-blog competition executes across distributed systems, Node.js, and AI.
             Only the highest-scoring winner is selected and stored in this permanent technical archive.
           </p>
         </div>
+      </section>
 
+      {/* Main Archive Section */}
+      <section className="px-6 pb-24 md:px-10 max-w-7xl mx-auto">
         {/* Search & Tag Filter Pills */}
-        <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-5 mb-10 pb-6 border-b border-border/40">
+        <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-5 mb-12 pb-6 border-b border-border/40">
           <div className="relative flex-1 max-w-md">
             <input
               type="text"
               placeholder="Search by title, keywords, or TL;DR..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-2xl border border-border/60 bg-card/60 px-4 py-3 pl-10 text-xs font-mono text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent transition-all backdrop-blur-md shadow-inner"
+              className="w-full rounded-2xl border border-border/70 bg-card/60 px-4 py-3 pl-10 text-xs font-mono text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent transition-all backdrop-blur-md shadow-sm"
             />
             <span className="absolute left-3.5 top-3.5 text-muted-foreground text-xs">🔍</span>
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
                 className="absolute right-3.5 top-3 text-xs text-muted-foreground hover:text-foreground"
+                aria-label="Clear search"
               >
                 ✕
               </button>
@@ -368,35 +380,38 @@ export function Blog() {
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            {allTags.map((tag) => (
-              <button
-                key={tag}
-                onClick={() => setSelectedTag(tag)}
-                data-cursor="link"
-                className={`font-mono-alt px-3.5 py-1.5 rounded-full text-[11px] uppercase tracking-wider transition-all ${
-                  selectedTag === tag
-                    ? "bg-accent text-accent-foreground font-bold shadow-md shadow-accent/20"
-                    : "border border-border/60 bg-background/50 text-muted-foreground hover:text-foreground hover:border-accent/50 backdrop-blur-sm"
-                }`}
-              >
-                {tag}
-              </button>
-            ))}
+            {allTags.map((tag) => {
+              const isActive = selectedTag === tag;
+              return (
+                <button
+                  key={tag}
+                  onClick={() => setSelectedTag(tag)}
+                  data-cursor="link"
+                  className={`font-mono-alt px-4 py-2 rounded-full text-[10px] uppercase tracking-[0.18em] transition-all cursor-pointer ${
+                    isActive
+                      ? "bg-accent text-accent-foreground font-bold shadow-md shadow-accent/20 border border-accent"
+                      : "border border-border/70 bg-secondary/50 text-foreground/80 hover:border-accent/60 hover:text-foreground backdrop-blur-sm"
+                  }`}
+                >
+                  {tag}
+                </button>
+              );
+            })}
           </div>
         </div>
 
         {/* Today's Featured Champion Spotlight Banner */}
         {!searchQuery && selectedTag === "All" && activeChampion && (
-          <div className="mb-14">
-            <div className="group relative overflow-hidden rounded-3xl border border-accent/40 bg-gradient-to-br from-card via-[#090d18] to-card/60 p-6 md:p-10 shadow-2xl transition-all hover:border-accent">
+          <div className="mb-16">
+            <div className="group relative overflow-hidden rounded-3xl border border-accent/40 bg-gradient-to-br from-card/95 via-card to-card/75 p-6 md:p-10 shadow-2xl transition-all duration-500 hover:border-accent hover:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.3)]">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                <div className="lg:col-span-5 relative aspect-[16/10] overflow-hidden rounded-2xl border border-border/40 bg-black/60 shadow-lg">
+                <div className="lg:col-span-5 relative aspect-[16/10] overflow-hidden rounded-2xl border border-border/50 bg-secondary/50 shadow-lg">
                   <img
                     src={champCover}
                     alt={activeChampion.title}
                     className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   />
-                  <div className="absolute top-3 left-3 rounded-lg bg-black/85 backdrop-blur-md px-3 py-1.5 text-[11px] font-mono font-bold text-accent border border-accent/40 shadow-md">
+                  <div className="absolute top-3 left-3 rounded-lg bg-background/90 backdrop-blur-md px-3 py-1.5 text-[11px] font-mono font-bold text-accent border border-accent/40 shadow-md">
                     🏆 TODAY&apos;S #1 CHAMPION (SEO: {champScore}/100)
                   </div>
                 </div>
@@ -409,11 +424,11 @@ export function Blog() {
                       <span className="text-accent font-medium">Focus: {activeChampion.targetKeyword || activeChampion.target_keyword}</span>
                     </div>
 
-                    <h2 className="display text-2xl sm:text-3xl md:text-4xl font-bold leading-tight group-hover:text-accent transition-colors">
+                    <h2 className="display text-2xl sm:text-3xl md:text-4xl font-bold leading-tight text-foreground group-hover:text-accent transition-colors">
                       {activeChampion.title}
                     </h2>
 
-                    <div className="mt-4 p-5 rounded-2xl bg-accent/[0.08] border border-accent/40 border-l-4 border-l-accent text-xs sm:text-sm text-foreground/90 leading-relaxed font-sans shadow-md">
+                    <div className="mt-5 p-5 rounded-2xl bg-accent/[0.08] border border-accent/40 border-l-4 border-l-accent text-xs sm:text-sm text-foreground/90 leading-relaxed font-sans shadow-sm">
                       <strong className="text-accent uppercase tracking-wider font-mono block text-[11px] mb-1.5 flex items-center gap-1.5">
                         <span>⚡</span> Direct Answer &amp; Key Takeaway (TL;DR):
                       </strong>
@@ -442,7 +457,7 @@ export function Blog() {
         {/* Saved Winner Articles Section Title */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h2 className="display text-2xl sm:text-3xl font-bold">
+            <h2 className="display text-2xl sm:text-3xl font-bold text-foreground">
               {searchQuery ? `Search Results for "${searchQuery}"` : "All Saved Winner Articles"}
             </h2>
             <p className="font-mono text-xs text-muted-foreground mt-1">
@@ -461,13 +476,13 @@ export function Blog() {
         ) : filteredBlogs.length === 0 ? (
           <div className="text-center py-20 border border-border/40 rounded-3xl bg-card/20 backdrop-blur-sm">
             <span className="text-3xl">🔍</span>
-            <h3 className="display text-xl font-bold mt-4">No matching articles found</h3>
+            <h3 className="display text-xl font-bold mt-4 text-foreground">No matching articles found</h3>
             <p className="text-xs font-mono text-muted-foreground mt-2">
               Try adjusting your search query or selecting a different topic tag.
             </p>
             <button
               onClick={() => { setSearchQuery(""); setSelectedTag("All"); }}
-              className="mt-5 font-mono-alt text-xs uppercase tracking-widest text-accent hover:underline"
+              className="mt-5 font-mono-alt text-xs uppercase tracking-widest text-accent hover:underline cursor-pointer"
             >
               Reset Filters
             </button>
@@ -479,20 +494,20 @@ export function Blog() {
                 key={post.slug || idx}
                 onClick={() => setSelectedArticle(post)}
                 data-cursor="link"
-                className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border/50 bg-card/40 p-6 transition-all duration-300 hover:border-accent/60 hover:bg-card/75 cursor-pointer shadow-lg hover:shadow-2xl backdrop-blur-md"
+                className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border/60 bg-card/50 p-6 transition-all duration-300 hover:border-accent/60 hover:bg-card/80 cursor-pointer shadow-md hover:shadow-2xl backdrop-blur-md"
               >
                 <div>
-                  <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-border/30 mb-4 bg-black/60 shadow-md">
+                  <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-border/40 mb-4 bg-secondary/40 shadow-sm">
                     <img
                       src={post.coverUrl || post.cover_url || FALLBACK_WINNERS[idx % FALLBACK_WINNERS.length].coverUrl}
                       alt={post.title}
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute top-2.5 left-2.5 flex items-center gap-2">
-                      <span className="rounded-md bg-black/85 backdrop-blur-md px-2.5 py-0.5 text-[10px] font-mono font-bold text-accent border border-accent/40 shadow-sm">
+                      <span className="rounded-md bg-background/90 backdrop-blur-md px-2.5 py-0.5 text-[10px] font-mono font-bold text-accent border border-accent/40 shadow-sm">
                         🏆 Winner
                       </span>
-                      <span className="rounded-md bg-black/85 backdrop-blur-md px-2.5 py-0.5 text-[10px] font-mono text-foreground/80 border border-white/10">
+                      <span className="rounded-md bg-background/90 backdrop-blur-md px-2.5 py-0.5 text-[10px] font-mono text-foreground/80 border border-border/50">
                         SEO: {post.seoScore || post.seo_score || 92}/100
                       </span>
                     </div>
@@ -504,16 +519,16 @@ export function Blog() {
                     <span className="text-accent/90">{post.targetKeyword || "Technical Deep Dive"}</span>
                   </div>
 
-                  <h3 className="display text-lg font-bold leading-snug group-hover:text-accent transition-colors line-clamp-2">
+                  <h3 className="display text-lg font-bold leading-snug text-foreground group-hover:text-accent transition-colors line-clamp-2">
                     {post.title}
                   </h3>
 
-                  <p className="mt-3 text-xs leading-relaxed text-muted-foreground line-clamp-3">
+                  <p className="mt-3 text-xs leading-relaxed text-muted-foreground line-clamp-3 font-sans">
                     {post.tldrSummary || post.tldr_summary || post.metaDescription || (post.contentMarkdown || "").slice(0, 160).replace(/[#*`]/g, "") + "..."}
                   </p>
                 </div>
 
-                <div className="mt-6 border-t border-border/30 pt-4 flex items-center justify-between">
+                <div className="mt-6 border-t border-border/40 pt-4 flex items-center justify-between">
                   <div className="flex gap-1.5 flex-wrap">
                     {(post.hashtags || []).slice(0, 2).map((t) => (
                       <span key={t} className="text-[10px] font-mono text-muted-foreground bg-accent/5 px-2 py-0.5 rounded border border-accent/20">
@@ -529,7 +544,10 @@ export function Blog() {
             ))}
           </div>
         )}
-      </div>
+      </section>
+
+      {/* Signature Interactive Scrambled Footer */}
+      <Footer />
 
       {/* Full Article Details View & Deep Linking Modal */}
       {selectedArticle && (
@@ -537,19 +555,19 @@ export function Blog() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setSelectedArticle(null);
           }}
-          className="fixed inset-0 z-[300] flex items-center justify-center bg-black/90 backdrop-blur-2xl p-4 md:p-8 overflow-y-auto animate-in fade-in duration-300"
+          className="fixed inset-0 z-[300] flex items-center justify-center bg-background/85 backdrop-blur-2xl p-4 md:p-8 overflow-y-auto animate-in fade-in duration-300"
         >
-          <div className="relative w-full max-w-4xl max-h-[92vh] overflow-hidden rounded-3xl border border-white/15 bg-[#080b12] text-foreground shadow-2xl flex flex-col">
+          <div className="relative w-full max-w-4xl max-h-[92vh] overflow-hidden rounded-3xl border border-border/80 bg-card text-foreground shadow-2xl flex flex-col">
             {/* Modal Header */}
-            <div className="flex items-center justify-between border-b border-white/10 px-6 py-4 bg-[#080b12]/90 sticky top-0 z-50 backdrop-blur-md">
+            <div className="flex items-center justify-between border-b border-border/50 px-6 py-4 bg-card/95 sticky top-0 z-50 backdrop-blur-md">
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => setSelectedArticle(null)}
-                  className="font-mono-alt text-xs uppercase tracking-widest text-muted-foreground hover:text-accent flex items-center gap-1 transition-colors"
+                  className="font-mono-alt text-xs uppercase tracking-widest text-muted-foreground hover:text-accent flex items-center gap-1 transition-colors cursor-pointer"
                 >
                   ← Back to Articles
                 </button>
-                <span className="hidden sm:inline text-white/20">|</span>
+                <span className="hidden sm:inline text-border">|</span>
                 <span className="hidden sm:inline-flex rounded-full bg-accent/15 border border-accent/40 px-3 py-0.5 font-mono text-[10px] uppercase text-accent font-bold">
                   🏆 Winner Blog (Score: {selectedArticle.seoScore || selectedArticle.seo_score || 96}/100)
                 </span>
@@ -559,13 +577,13 @@ export function Blog() {
                 <button
                   onClick={handleShare}
                   data-cursor="link"
-                  className="font-mono-alt text-[11px] uppercase tracking-wider px-3.5 py-1.5 rounded-lg border border-border/60 hover:border-accent text-muted-foreground hover:text-foreground transition-all shadow-sm"
+                  className="font-mono-alt text-[11px] uppercase tracking-wider px-3.5 py-1.5 rounded-lg border border-border/60 hover:border-accent text-muted-foreground hover:text-foreground transition-all shadow-sm cursor-pointer"
                 >
                   {copyFeedback ? "✓ Link Copied!" : "🔗 Share"}
                 </button>
                 <button
                   onClick={() => setSelectedArticle(null)}
-                  className="rounded-full p-2 text-muted-foreground hover:bg-white/10 hover:text-foreground transition-colors"
+                  className="rounded-full p-2 text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors cursor-pointer"
                   aria-label="Close"
                 >
                   ✕
@@ -579,7 +597,7 @@ export function Blog() {
               className="p-6 md:p-10 overflow-y-auto space-y-8"
             >
               {selectedArticle.coverUrl && (
-                <div className="relative w-full max-h-96 overflow-hidden rounded-2xl border border-white/10 bg-black/60 shadow-lg">
+                <div className="relative w-full max-h-96 overflow-hidden rounded-2xl border border-border/50 bg-secondary/50 shadow-lg">
                   <img
                     src={selectedArticle.coverUrl || selectedArticle.cover_url}
                     alt={selectedArticle.title}
@@ -597,7 +615,7 @@ export function Blog() {
                   <span className="text-accent font-semibold">SEO Evaluated: {selectedArticle.seoScore || selectedArticle.seo_score || 96}/100</span>
                 </div>
 
-                <h1 className="display text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight">
+                <h1 className="display text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight text-foreground">
                   {selectedArticle.title}
                 </h1>
 
@@ -611,7 +629,7 @@ export function Blog() {
               </div>
 
               {/* ⚡ Key Takeaways / Direct Answer (TL;DR) Box */}
-              <div className="rounded-2xl border border-accent/40 bg-accent/[0.08] p-5 md:p-6 border-l-4 border-l-accent shadow-[0_0_25px_rgba(255,255,255,0.03)]">
+              <div className="rounded-2xl border border-accent/40 bg-accent/[0.08] p-5 md:p-6 border-l-4 border-l-accent shadow-sm">
                 <strong className="text-accent font-mono text-xs uppercase tracking-widest block mb-2 flex items-center gap-1.5">
                   <span>⚡</span> Key Takeaways / Direct Answer (TL;DR):
                 </strong>
@@ -622,7 +640,7 @@ export function Blog() {
 
               {/* Formatted Markdown Body with Styled Code Blocks & Copy Button */}
               <div
-                className="prose prose-invert max-w-none text-muted-foreground font-sans leading-relaxed text-sm md:text-base"
+                className="prose prose-neutral dark:prose-invert max-w-none text-muted-foreground font-sans leading-relaxed text-sm md:text-base"
                 dangerouslySetInnerHTML={{
                   __html: renderMarkdown(
                     selectedArticle.contentMarkdown ||
@@ -634,7 +652,7 @@ export function Blog() {
               />
 
               {/* Author & Footer Social Links */}
-              <div className="border-t border-white/10 pt-8 mt-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="border-t border-border/50 pt-8 mt-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
                   <div className="h-12 w-12 rounded-full bg-accent/20 border border-accent/50 flex items-center justify-center font-bold text-accent font-mono text-lg shadow-sm">
                     AT
@@ -654,7 +672,7 @@ export function Blog() {
                   >
                     LinkedIn ↗
                   </a>
-                  <span className="text-white/20">•</span>
+                  <span className="text-border">•</span>
                   <a
                     href="https://github.com/abhishektiwari1540"
                     target="_blank"
@@ -669,6 +687,6 @@ export function Blog() {
           </div>
         </div>
       )}
-    </div>
+    </main>
   );
 }

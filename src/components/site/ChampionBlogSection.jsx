@@ -12,25 +12,25 @@ function renderMarkdown(md) {
     // Code blocks with syntax header and Copy button
     .replace(/```([a-zA-Z0-9_-]*)\n([\s\S]*?)```/g, (match, lang, code) => {
       const displayLang = lang || "code";
-      return `<div class="code-block-container my-6 rounded-2xl overflow-hidden border border-white/10 bg-[#06080e] shadow-xl">
-        <div class="flex items-center justify-between px-4 py-2.5 border-b border-white/10 bg-white/[0.03]">
+      return `<div class="code-block-container my-6 rounded-2xl overflow-hidden border border-border/60 bg-secondary/40 shadow-xl">
+        <div class="flex items-center justify-between px-4 py-2.5 border-b border-border/50 bg-card/60">
           <span class="text-[11px] font-mono text-accent uppercase tracking-wider font-semibold">${displayLang}</span>
-          <button type="button" data-copy-code class="copy-code-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 hover:bg-white/15 text-muted-foreground hover:text-foreground text-[10px] font-mono uppercase tracking-wider transition-all">
+          <button type="button" data-copy-code class="copy-code-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-secondary hover:bg-secondary/80 text-muted-foreground hover:text-foreground text-[10px] font-mono uppercase tracking-wider transition-all border border-border/40">
             <span>Copy</span>
           </button>
         </div>
-        <pre class="p-4 overflow-x-auto font-mono text-xs text-foreground/90 leading-relaxed"><code>${code}</code></pre>
+        <pre class="p-4 overflow-x-auto font-mono text-xs text-foreground/90 leading-relaxed bg-card/50"><code>${code}</code></pre>
       </div>`;
     })
     .replace(/```([\s\S]*?)```/g, (match, code) => {
-      return `<div class="code-block-container my-6 rounded-2xl overflow-hidden border border-white/10 bg-[#06080e] shadow-xl">
-        <div class="flex items-center justify-between px-4 py-2.5 border-b border-white/10 bg-white/[0.03]">
+      return `<div class="code-block-container my-6 rounded-2xl overflow-hidden border border-border/60 bg-secondary/40 shadow-xl">
+        <div class="flex items-center justify-between px-4 py-2.5 border-b border-border/50 bg-card/60">
           <span class="text-[11px] font-mono text-accent uppercase tracking-wider font-semibold">Snippet</span>
-          <button type="button" data-copy-code class="copy-code-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 hover:bg-white/15 text-muted-foreground hover:text-foreground text-[10px] font-mono uppercase tracking-wider transition-all">
+          <button type="button" data-copy-code class="copy-code-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-secondary hover:bg-secondary/80 text-muted-foreground hover:text-foreground text-[10px] font-mono uppercase tracking-wider transition-all border border-border/40">
             <span>Copy</span>
           </button>
         </div>
-        <pre class="p-4 overflow-x-auto font-mono text-xs text-foreground/90 leading-relaxed"><code>${code}</code></pre>
+        <pre class="p-4 overflow-x-auto font-mono text-xs text-foreground/90 leading-relaxed bg-card/50"><code>${code}</code></pre>
       </div>`;
     })
     // Inline code
@@ -246,11 +246,11 @@ export function ChampionBlogSection() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setSelectedArticle(null);
           }}
-          className="fixed inset-0 z-[300] flex items-center justify-center bg-black/90 backdrop-blur-xl p-4 md:p-8 overflow-y-auto animate-in fade-in duration-300"
+          className="fixed inset-0 z-[300] flex items-center justify-center bg-background/85 backdrop-blur-2xl p-4 md:p-8 overflow-y-auto animate-in fade-in duration-300"
         >
-          <div className="relative w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-3xl border border-white/10 bg-[#080b12] text-foreground shadow-2xl flex flex-col">
+          <div className="relative w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-3xl border border-border/80 bg-card text-foreground shadow-2xl flex flex-col">
             {/* Modal Header */}
-            <div className="flex items-center justify-between border-b border-white/10 px-6 py-4 bg-black/80 sticky top-0 z-50 backdrop-blur-md">
+            <div className="flex items-center justify-between border-b border-border/50 px-6 py-4 bg-card/95 sticky top-0 z-50 backdrop-blur-md">
               <div className="flex items-center gap-3">
                 <span className="rounded-full bg-accent/20 border border-accent/40 px-3 py-0.5 font-mono text-[10px] uppercase text-accent font-bold">
                   🏆 #1 Champion Winner
@@ -269,7 +269,7 @@ export function ChampionBlogSection() {
                 </Link>
                 <button
                   onClick={() => setSelectedArticle(null)}
-                  className="rounded-full p-2 text-muted-foreground hover:bg-white/10 hover:text-foreground transition-colors"
+                  className="rounded-full p-2 text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors cursor-pointer"
                   aria-label="Close"
                 >
                   ✕
@@ -283,7 +283,7 @@ export function ChampionBlogSection() {
               className="p-6 md:p-10 overflow-y-auto space-y-6"
             >
               {coverImage && (
-                <div className="relative w-full max-h-80 overflow-hidden rounded-2xl border border-white/10 bg-black/50">
+                <div className="relative w-full max-h-80 overflow-hidden rounded-2xl border border-border/50 bg-secondary/50 shadow-md">
                   <img
                     src={coverImage}
                     alt={selectedArticle.title}
@@ -301,12 +301,12 @@ export function ChampionBlogSection() {
                   <span className="text-accent font-semibold">SEO Evaluated: {score}/100</span>
                 </div>
 
-                <h1 className="display text-3xl sm:text-4xl font-extrabold leading-tight">
+                <h1 className="display text-3xl sm:text-4xl font-extrabold leading-tight text-foreground">
                   {selectedArticle.title}
                 </h1>
               </div>
 
-              <div className="p-5 rounded-2xl bg-accent/[0.08] border border-accent/40 shadow-[0_0_25px_rgba(255,255,255,0.03)] border-l-4 border-l-accent">
+              <div className="p-5 rounded-2xl bg-accent/[0.08] border border-accent/40 shadow-sm border-l-4 border-l-accent">
                 <strong className="text-accent uppercase tracking-wider font-mono block text-[11px] mb-1.5 flex items-center gap-2">
                   <span>⚡</span> Direct Answer &amp; Key Takeaway (TL;DR):
                 </strong>
@@ -317,7 +317,7 @@ export function ChampionBlogSection() {
 
               <div
                 id="blog-content"
-                className="prose prose-invert max-w-none text-muted-foreground font-sans leading-relaxed text-sm md:text-base"
+                className="prose prose-neutral dark:prose-invert max-w-none text-muted-foreground font-sans leading-relaxed text-sm md:text-base"
                 dangerouslySetInnerHTML={{
                   __html: renderMarkdown(
                     selectedArticle.contentMarkdown ||
@@ -328,7 +328,7 @@ export function ChampionBlogSection() {
                 }}
               />
 
-              <div className="border-t border-white/10 pt-6 mt-8 flex items-center justify-between">
+              <div className="border-t border-border/50 pt-6 mt-8 flex items-center justify-between">
                 <span className="text-xs font-mono text-muted-foreground">
                   Written by Abhishek Tiwari — Lead Full Stack Developer
                 </span>

@@ -10,7 +10,7 @@ const NAV = [
   { to: "/", label: "Work", hash: "work" },
   { to: "/about", label: "About", hash: null },
   { to: "/", label: "Contact", hash: "contact" },
-  { to: "/", label: "Blog", hash: "blog" },
+  { to: "/blog", label: "Blog", hash: null },
 ];
 
 function ThemeToggle() {

@@ -1,30 +1,22 @@
-import { useEffect } from "react";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Home } from "@/components/pages/Home";
-
-function BlogRedirect() {
-  const navigate = useNavigate();
-  useEffect(() => {
-    navigate({ to: "/", replace: true, hash: "blog" });
-  }, [navigate]);
-  return <Home />;
-}
+import { createFileRoute } from "@tanstack/react-router";
+import { Blog } from "@/components/pages/Blog";
 
 export const Route = createFileRoute("/blog")({
   head: () => ({
     meta: [
-      { title: "Daily AI Digest & Blog — Abhishek Tiwari" },
+      { title: "Daily AI Champion Blog & Architectural Deep Dives — Abhishek Tiwari" },
       {
         name: "description",
         content:
-          "Daily AI Career Digest & Candidate Blogs generated automatically with Gemini AI and self-judgment SEO ranking.",
+          "Explore daily #1 AI-evaluated architectural deep dives, engineering benchmarks, and microservice designs by Abhishek Tiwari.",
       },
-      { property: "og:title", content: "Daily AI Digest & Blog — Abhishek Tiwari" },
+      { property: "og:title", content: "Daily AI Champion Blog — Abhishek Tiwari" },
       {
         property: "og:description",
-        content: "Automated daily tech blogs and candidate ranking engine by Abhishek Tiwari.",
+        content:
+          "Daily #1 winner technical blogs evaluated by multi-factor SEO and architecture quality gates.",
       },
     ],
   }),
-  component: BlogRedirect,
+  component: Blog,
 });

@@ -4,61 +4,116 @@ import { registerGsap } from "@/lib/gsap";
 
 function renderMarkdown(md) {
   if (!md) return "";
+
   let html = md
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
-    .replace(/```([a-z]*)\n([\s\S]*?)```/g, '<div class="my-6 rounded-xl overflow-hidden border border-border/80 bg-black/90"><div class="px-4 py-2 border-b border-border/50 text-[11px] font-mono text-muted-foreground flex justify-between items-center"><span>$1</span><span class="text-accent">Code Snippet</span></div><pre class="p-4 overflow-x-auto font-mono text-xs text-accent/90"><code>$2</code></pre></div>')
-    .replace(/```([\s\S]*?)```/g, '<pre class="bg-black/90 border border-border/80 p-4 rounded-xl my-6 overflow-x-auto font-mono text-xs text-accent/90"><code>$1</code></pre>')
+    // Code blocks with syntax header and Copy button
+    .replace(/```([a-zA-Z0-9_-]*)\n([\s\S]*?)```/g, (match, lang, code) => {
+      const displayLang = lang || "code";
+      return `<div class="code-block-container my-6 rounded-2xl overflow-hidden border border-white/10 bg-[#06080e] shadow-xl">
+        <div class="flex items-center justify-between px-4 py-2.5 border-b border-white/10 bg-white/[0.03]">
+          <span class="text-[11px] font-mono text-accent uppercase tracking-wider font-semibold">${displayLang}</span>
+          <button type="button" data-copy-code class="copy-code-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 hover:bg-white/15 text-muted-foreground hover:text-foreground text-[10px] font-mono uppercase tracking-wider transition-all">
+            <span>Copy</span>
+          </button>
+        </div>
+        <pre class="p-4 overflow-x-auto font-mono text-xs text-foreground/90 leading-relaxed"><code>${code}</code></pre>
+      </div>`;
+    })
+    .replace(/```([\s\S]*?)```/g, (match, code) => {
+      return `<div class="code-block-container my-6 rounded-2xl overflow-hidden border border-white/10 bg-[#06080e] shadow-xl">
+        <div class="flex items-center justify-between px-4 py-2.5 border-b border-white/10 bg-white/[0.03]">
+          <span class="text-[11px] font-mono text-accent uppercase tracking-wider font-semibold">Snippet</span>
+          <button type="button" data-copy-code class="copy-code-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 hover:bg-white/15 text-muted-foreground hover:text-foreground text-[10px] font-mono uppercase tracking-wider transition-all">
+            <span>Copy</span>
+          </button>
+        </div>
+        <pre class="p-4 overflow-x-auto font-mono text-xs text-foreground/90 leading-relaxed"><code>${code}</code></pre>
+      </div>`;
+    })
+    // Inline code
     .replace(/`([^`]+)`/g, '<code class="bg-accent/15 text-accent px-1.5 py-0.5 rounded font-mono text-xs">$1</code>')
+    // Headings
     .replace(/^### (.*$)/gim, '<h3 class="text-xl font-bold text-foreground mt-8 mb-3">$1</h3>')
     .replace(/^## (.*$)/gim, '<h2 class="text-2xl font-bold text-foreground mt-10 mb-4 border-b border-border/40 pb-2">$1</h2>')
     .replace(/^# (.*$)/gim, '<h1 class="text-3xl font-bold text-foreground mt-12 mb-6">$1</h1>')
+    // Bold & Italic
     .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-foreground">$1</strong>')
     .replace(/\*(.*?)\*/g, '<em class="italic text-foreground/80">$1</em>')
+    // Links
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-accent underline underline-offset-4 hover:opacity-80 transition-opacity">$1</a>')
+    // Unordered lists
     .replace(/^\s*[-*]\s+(.*$)/gim, '<li class="ml-4 list-disc text-muted-foreground my-1.5">$1</li>')
+    // Paragraphs
     .replace(/\n\n+/g, '</p><p class="my-4 leading-relaxed text-muted-foreground">');
 
   return '<p class="my-4 leading-relaxed text-muted-foreground">' + html + '</p>';
 }
 
+const DEFAULT_FILTER_TAGS = ["All", "#TypeScript", "#NodeJS", "#Microservices", "#AI", "#Architecture"];
+
 const FALLBACK_WINNERS = [
   {
-    title: "TypeScript Clean Architecture: Enterprise-Grade Domain Modeling & Microservices",
-    slug: "typescript-clean-architecture-enterprise-microservices",
+    title: "TypeScript Clean Code Architecture for Enterprise Microservices",
+    slug: "typescript-clean-code-architecture-enterprise",
     targetKeyword: "TypeScript Clean Architecture Microservices",
     metaDescription: "Master enterprise clean architecture in TypeScript. Implement domain-driven design, repositories, dependency injection, and microservices.",
     tldrSummary: "Implement Clean Architecture with TypeScript using decoupled Domain Entities, Use Cases, Interfaces, and Dependency Injection to scale microservices effortlessly.",
     seoScore: 96,
-    publishedAt: "Today",
-    coverUrl: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200",
-    hashtags: ["#TypeScript", "#CleanArchitecture", "#Microservices", "#NodeJS"],
-    contentMarkdown: "## Core Architectural Principles\n\nClean Architecture separates concerns by keeping business domain logic independent of external frameworks, databases, and UI components.\n\n```typescript\nexport interface IUserRepository {\n  findById(id: string): Promise<User | null>;\n  save(user: User): Promise<void>;\n}\n\nexport class RegisterUserUseCase {\n  constructor(private userRepo: IUserRepository) {}\n  async execute(dto: RegisterUserDto): Promise<User> {\n    const user = new User(dto.email, dto.name);\n    await this.userRepo.save(user);\n    return user;\n  }\n}\n```\n\n## Frequently Asked Questions\n\n### How does Clean Architecture scale?\nBy keeping use-cases pure and isolated, testing is deterministic and teams can deploy microservices without cascading dependencies."
+    publishedAt: "2026-10-13",
+    coverUrl: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&auto=format&fit=crop&q=80",
+    hashtags: ["#TypeScript", "#CleanCode", "#DesignPatterns", "#Enterprise"],
+    contentMarkdown: `## Core Architectural Principles\n\nClean Architecture separates concerns by keeping business domain logic independent of external frameworks, databases, and UI components.\n\n\`\`\`typescript\nexport interface IUserRepository {\n  findById(id: string): Promise<User | null>;\n  save(user: User): Promise<void>;\n}\n\nexport class RegisterUserUseCase {\n  constructor(private userRepo: IUserRepository) {}\n  async execute(dto: RegisterUserDto): Promise<User> {\n    const user = new User(dto.email, dto.name);\n    await this.userRepo.save(user);\n    return user;\n  }\n}\n\`\`\`\n\n## Frequently Asked Questions\n\n### How does Clean Architecture scale?\nBy keeping use-cases pure and isolated, testing is deterministic and teams can deploy microservices without cascading dependencies.`
   },
   {
-    title: "Building High-Concurrency Node.js Microservices: Patterns & Pitfalls",
-    slug: "building-high-concurrency-nodejs-microservices",
-    targetKeyword: "Node.js microservices concurrency",
-    metaDescription: "Learn how we built and scaled high-concurrency Node.js microservices handling 50k+ requests with clustering, event loops, and worker threads.",
-    tldrSummary: "Discover battle-tested concurrency patterns in Node.js microservices: cluster module, worker thread pools, backpressure streaming, and memory leak prevention.",
-    seoScore: 95,
-    publishedAt: "Yesterday",
-    coverUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200",
-    hashtags: ["#NodeJS", "#Microservices", "#Backend", "#Scalability"],
-    contentMarkdown: "## Event Loop & Clustering\n\nTo maximize multiple CPU cores, leverage the native Node.js cluster module and worker threads for CPU-bound computations.\n\n```typescript\nimport cluster from \"node:cluster\";\nimport os from \"node:os\";\n\nif (cluster.isPrimary) {\n  const numCPUs = os.cpus().length;\n  for (let i = 0; i < numCPUs; i++) cluster.fork();\n}\n```"
+    title: "Generative AI RAG Pipeline Design with Hybrid Keyword & Embedding Search",
+    slug: "generative-ai-rag-pipeline-hybrid-search",
+    targetKeyword: "Generative AI RAG Pipeline Hybrid Search",
+    metaDescription: "Architect production Retrieval-Augmented Generation (RAG) pipelines combining BM25 keyword matching with dense pgvector embeddings.",
+    tldrSummary: "Combine sparse lexical BM25 indexing with dense vector embeddings in Supabase pgvector to achieve sub-50ms hybrid retrieval for AI agents.",
+    seoScore: 92,
+    publishedAt: "2026-10-13",
+    coverUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&auto=format&fit=crop&q=80",
+    hashtags: ["#AI", "#RAG", "#VectorSearch", "#Architecture"],
+    contentMarkdown: `## Hybrid Search Architecture\n\nPure vector search frequently hallucinates on exact product codes and specific entity names. By blending dense embeddings with sparse BM25 indices, retrieval accuracy jumps significantly.\n\n\`\`\`sql\nCREATE INDEX ON documents USING hnsw (embedding vector_cosine_ops);\nCREATE INDEX ON documents USING gin (to_tsvector('english', content));\n\`\`\``
   },
   {
-    title: "Architecting Real-Time Vector Search with Supabase pgvector and Gemini 3.6",
-    slug: "architecting-realtime-vector-search-supabase-pgvector-gemini",
-    targetKeyword: "Supabase pgvector Gemini vector search",
-    metaDescription: "Step-by-step production architecture for hybrid vector search using Supabase pgvector HNSW indexing and Google Gemini 3.6 embeddings in Node.js.",
-    tldrSummary: "Implement low-latency semantic search using Gemini 3.6 embedding models and Supabase pgvector HNSW cosine similarity queries in Node.js.",
-    seoScore: 94,
-    publishedAt: "2 days ago",
-    coverUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200",
-    hashtags: ["#Supabase", "#pgvector", "#Gemini", "#AI"],
-    contentMarkdown: "## Vector Search with HNSW Indexing\n\nVector databases allow instant semantic retrieval. By applying HNSW indexing over pgvector columns, queries run in under 12 milliseconds."
+    title: "Securing REST APIs: OAuth2, JWT, and Rate Limiting",
+    slug: "securing-rest-apis-oauth2-jwt-rate-limiting",
+    targetKeyword: "Securing REST APIs OAuth2 JWT Rate Limiting",
+    metaDescription: "Hardening production Node.js & Laravel REST APIs with token rotation, sliding rate limiters, and cryptographically verified claims.",
+    tldrSummary: "Protect enterprise endpoints against brute force and token theft using Redis sliding-window rate limiters, asymmetric JWT signing, and secure cookie storage.",
+    seoScore: 92,
+    publishedAt: "2026-10-13",
+    coverUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&auto=format&fit=crop&q=80",
+    hashtags: ["#NodeJS", "#Security", "#REST", "#Architecture"],
+    contentMarkdown: `## Token Security & Validation\n\nAlways verify audience and issuer claims while rotating secret keys on a zero-trust model.`
+  },
+  {
+    title: "Automating CI/CD Pipelines with GitHub Actions, Docker & Kubernetes",
+    slug: "automating-cicd-github-actions-docker-k8s",
+    targetKeyword: "Automating CI CD GitHub Actions Docker Kubernetes",
+    metaDescription: "Build zero-downtime automated deployment pipelines with multi-stage Docker builds, vulnerability scanning, and rolling Kubernetes deploys.",
+    tldrSummary: "Streamline release engineering by pairing GitHub Actions matrix workflows with cached multi-stage Docker images and automated health checks.",
+    seoScore: 92,
+    publishedAt: "2026-10-13",
+    coverUrl: "https://images.unsplash.com/photo-1607799279861-4dd421887fb3?w=1200&auto=format&fit=crop&q=80",
+    hashtags: ["#DevOps", "#Docker", "#Kubernetes", "#Microservices"],
+    contentMarkdown: `## Multi-Stage Docker Builds\n\nKeep production images tiny by separating build tools from minimal Alpine/distroless runtime containers.`
+  },
+  {
+    title: "SEO Masterclass for Developers: Structured JSON-LD, Dynamic OpenGraph & SSR",
+    slug: "seo-masterclass-developers-jsonld-opengraph",
+    targetKeyword: "Technical SEO Structured JSON LD OpenGraph SSR",
+    metaDescription: "A developer guide to technical SEO: Schema.org JSON-LD injection, server-side metadata generation, and Core Web Vitals optimization.",
+    tldrSummary: "Maximize developer portfolio search rankings by serving validated Schema.org BlogPosting metadata, canonical links, and pre-rendered social cards.",
+    seoScore: 92,
+    publishedAt: "2026-10-13",
+    coverUrl: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=1200&auto=format&fit=crop&q=80",
+    hashtags: ["#SEO", "#TypeScript", "#WebDev", "#Architecture"],
+    contentMarkdown: `## Structured Data Implementation\n\nSearch engines rely on Schema.org JSON-LD to understand author identity, publishing timestamps, and technical concepts.`
   }
 ];
 
@@ -81,44 +136,78 @@ export function Blog() {
     async function loadBlogsArchive() {
       setLoading(true);
       try {
-        const res = await fetch("https://career-digest.vercel.app/api/blogs");
-        if (res.ok) {
-          const data = await res.json();
-          if (data.success) {
-            const list = data.blogs && data.blogs.length > 0 ? data.blogs : FALLBACK_WINNERS;
-            setBlogs(list);
-            const champ = data.champion || list[0];
-            setChampion(champ);
+        // Fetch champion and all saved winner blogs
+        const [champRes, allRes] = await Promise.all([
+          fetch("https://career-digest.vercel.app/api/blogs/champion").catch(() => null),
+          fetch("https://career-digest.vercel.app/api/blogs").catch(() => null)
+        ]);
 
-            if (slugParam) {
-              const matched = list.find((b) => b.slug === slugParam) || champ;
-              setSelectedArticle(matched);
+        let champData = null;
+        let allData = null;
+
+        if (champRes && champRes.ok) {
+          champData = await champRes.json();
+        }
+        if (allRes && allRes.ok) {
+          allData = await allRes.json();
+        }
+
+        const list = allData?.blogs && allData.blogs.length > 0
+          ? allData.blogs
+          : FALLBACK_WINNERS;
+
+        setBlogs(list);
+
+        const currentChamp = champData?.champion || allData?.champion || list[0];
+        setChampion(currentChamp);
+
+        // Deep linking handling for ?slug=<slug>
+        if (slugParam) {
+          let matched = list.find((b) => b.slug === slugParam);
+          if (!matched && slugParam) {
+            try {
+              const singleRes = await fetch(`https://career-digest.vercel.app/api/blogs/${encodeURIComponent(slugParam)}`);
+              if (singleRes.ok) {
+                const singleData = await singleRes.json();
+                if (singleData.success && singleData.blog) {
+                  matched = singleData.blog;
+                }
+              }
+            } catch (err) {
+              console.warn("Single blog fetch failed:", err);
             }
-            setLoading(false);
-            return;
+          }
+          if (matched) {
+            setSelectedArticle(matched);
           }
         }
+        setLoading(false);
       } catch (err) {
-        console.warn("Using fallback blogs archive:", err);
+        console.warn("Error loading blog archive, using fallback:", err);
+        setBlogs(FALLBACK_WINNERS);
+        setChampion(FALLBACK_WINNERS[0]);
+        if (slugParam) {
+          const matched = FALLBACK_WINNERS.find((b) => b.slug === slugParam) || FALLBACK_WINNERS[0];
+          setSelectedArticle(matched);
+        }
+        setLoading(false);
       }
-      setBlogs(FALLBACK_WINNERS);
-      setChampion(FALLBACK_WINNERS[0]);
-      if (slugParam) {
-        const matched = FALLBACK_WINNERS.find((b) => b.slug === slugParam) || FALLBACK_WINNERS[0];
-        setSelectedArticle(matched);
-      }
-      setLoading(false);
     }
 
     loadBlogsArchive();
   }, []);
 
+  // Sync URL query param & Inject SEO JSON-LD on active article change
   useEffect(() => {
-    if (selectedArticle) {
+    if (selectedArticle && selectedArticle.slug) {
       const url = new URL(window.location.href);
       url.searchParams.set("slug", selectedArticle.slug);
       window.history.pushState({}, "", url.toString());
 
+      // Update Page Title
+      document.title = `${selectedArticle.title} — Abhishek Tiwari`;
+
+      // Inject BlogPosting JSON-LD Schema
       let schemaScript = document.getElementById("blog-article-jsonld");
       if (!schemaScript) {
         schemaScript = document.createElement("script");
@@ -131,9 +220,16 @@ export function Blog() {
         "@type": "BlogPosting",
         headline: selectedArticle.title,
         description: selectedArticle.metaDescription || selectedArticle.tldrSummary,
+        image: selectedArticle.coverUrl,
         url: window.location.href,
         datePublished: selectedArticle.publishedAt,
         author: {
+          "@type": "Person",
+          name: "Abhishek Tiwari",
+          jobTitle: "Lead Full Stack Developer & Systems Engineer",
+          url: "https://www.abhishektiwari.online/"
+        },
+        publisher: {
           "@type": "Person",
           name: "Abhishek Tiwari",
           url: "https://www.abhishektiwari.online/"
@@ -141,34 +237,34 @@ export function Blog() {
       });
     } else {
       const url = new URL(window.location.href);
-      url.searchParams.delete("slug");
-      window.history.pushState({}, "", url.pathname);
+      if (url.searchParams.has("slug")) {
+        url.searchParams.delete("slug");
+        window.history.pushState({}, "", url.pathname);
+      }
+      document.title = "Daily AI Champion Blog Archive — Abhishek Tiwari";
     }
   }, [selectedArticle]);
 
-  const allTags = useMemo(() => {
-    const set = new Set(["All"]);
-    blogs.forEach((b) => {
-      (b.hashtags || []).forEach((t) => set.add(t));
-    });
-    return Array.from(set);
-  }, [blogs]);
-
-  const filteredBlogs = useMemo(() => {
-    return blogs.filter((b) => {
-      const matchesSearch =
-        !searchQuery ||
-        b.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        b.targetKeyword?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        b.tldrSummary?.toLowerCase().includes(searchQuery.toLowerCase());
-
-      const matchesTag =
-        selectedTag === "All" ||
-        (b.hashtags && b.hashtags.includes(selectedTag));
-
-      return matchesSearch && matchesTag;
-    });
-  }, [blogs, searchQuery, selectedTag]);
+  // Code Block Copy delegated click handler
+  const handleArticleBodyClick = (e) => {
+    const copyBtn = e.target.closest("[data-copy-code]");
+    if (copyBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      const codeBlock = copyBtn.closest(".code-block-container")?.querySelector("code");
+      if (codeBlock) {
+        navigator.clipboard.writeText(codeBlock.innerText || codeBlock.textContent || "");
+        const span = copyBtn.querySelector("span") || copyBtn;
+        const orig = span.textContent;
+        span.textContent = "Copied! ✓";
+        copyBtn.classList.add("text-accent");
+        setTimeout(() => {
+          span.textContent = orig;
+          copyBtn.classList.remove("text-accent");
+        }, 2000);
+      }
+    }
+  };
 
   const handleShare = () => {
     if (navigator.clipboard) {
@@ -178,9 +274,48 @@ export function Blog() {
     }
   };
 
+  // Build combined tag list starting with default requested tags
+  const allTags = useMemo(() => {
+    const tagSet = new Set(DEFAULT_FILTER_TAGS);
+    blogs.forEach((b) => {
+      (b.hashtags || []).forEach((t) => tagSet.add(t));
+    });
+    return Array.from(tagSet);
+  }, [blogs]);
+
+  // Filter blogs by search & tag
+  const filteredBlogs = useMemo(() => {
+    return blogs.filter((b) => {
+      const q = searchQuery.toLowerCase().trim();
+      const matchesSearch =
+        !q ||
+        b.title?.toLowerCase().includes(q) ||
+        b.targetKeyword?.toLowerCase().includes(q) ||
+        b.tldrSummary?.toLowerCase().includes(q) ||
+        b.summary?.toLowerCase().includes(q);
+
+      const normalizedTag = selectedTag.replace("#", "").toLowerCase();
+      const matchesTag =
+        selectedTag === "All" ||
+        (b.hashtags &&
+          b.hashtags.some(
+            (t) =>
+              t.toLowerCase() === selectedTag.toLowerCase() ||
+              t.toLowerCase().replace("#", "") === normalizedTag
+          ));
+
+      return matchesSearch && matchesTag;
+    });
+  }, [blogs, searchQuery, selectedTag]);
+
+  const activeChampion = champion || blogs[0] || FALLBACK_WINNERS[0];
+  const champScore = activeChampion.seoScore || activeChampion.seo_score || 96;
+  const champCover = activeChampion.coverUrl || activeChampion.cover_url || FALLBACK_WINNERS[0].coverUrl;
+
   return (
-    <div className="min-h-screen bg-background text-foreground pt-28 pb-32 px-6 md:px-12 selection:bg-accent/30 selection:text-accent">
+    <div className="min-h-screen bg-[#07090e] text-foreground pt-28 pb-32 px-6 md:px-12 selection:bg-accent/30 selection:text-accent">
       <div className="max-w-7xl mx-auto">
+        {/* Breadcrumb Navigation */}
         <div className="flex items-center justify-between mb-8 pb-4 border-b border-border/40">
           <Link
             to="/"
@@ -197,33 +332,35 @@ export function Blog() {
           </div>
         </div>
 
+        {/* Hero Header */}
         <div className="max-w-4xl mb-12">
-          <span className="font-mono-alt inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-3.5 py-1 text-[11px] uppercase tracking-[0.2em] text-accent">
+          <span className="font-mono-alt inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-4 py-1.5 text-[11px] uppercase tracking-[0.2em] text-accent">
             🏆 Daily AI Champion Blog Archive
           </span>
-          <h1 className="display mt-4 text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.08]">
+          <h1 className="display mt-4 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-[1.08]">
             Architectural Deep Dives &amp; Technical Articles
           </h1>
           <p className="mt-4 text-base sm:text-lg text-muted-foreground leading-relaxed font-sans max-w-3xl">
-            Each day, an automated 12-blog competition runs across distributed systems, Node.js, and AI.
-            Only the highest-scoring winner is selected and stored in this permanent archive.
+            Each day, an automated 12-blog competition executes across distributed systems, Node.js, and AI.
+            Only the highest-scoring winner is selected and stored in this permanent technical archive.
           </p>
         </div>
 
-        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 mb-10 pb-6 border-b border-border/40">
+        {/* Search & Tag Filter Pills */}
+        <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-5 mb-10 pb-6 border-b border-border/40">
           <div className="relative flex-1 max-w-md">
             <input
               type="text"
-              placeholder="Search articles, topics, or keywords..."
+              placeholder="Search by title, keywords, or TL;DR..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-xl border border-border/60 bg-card/60 px-4 py-2.5 pl-10 text-xs font-mono text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent transition-all"
+              className="w-full rounded-2xl border border-border/60 bg-card/60 px-4 py-3 pl-10 text-xs font-mono text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent transition-all backdrop-blur-md shadow-inner"
             />
-            <span className="absolute left-3.5 top-2.5 text-muted-foreground text-xs">🔍</span>
+            <span className="absolute left-3.5 top-3.5 text-muted-foreground text-xs">🔍</span>
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="absolute right-3 top-2.5 text-xs text-muted-foreground hover:text-foreground"
+                className="absolute right-3.5 top-3 text-xs text-muted-foreground hover:text-foreground"
               >
                 ✕
               </button>
@@ -231,7 +368,7 @@ export function Blog() {
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            {allTags.slice(0, 6).map((tag) => (
+            {allTags.map((tag) => (
               <button
                 key={tag}
                 onClick={() => setSelectedTag(tag)}
@@ -239,7 +376,7 @@ export function Blog() {
                 className={`font-mono-alt px-3.5 py-1.5 rounded-full text-[11px] uppercase tracking-wider transition-all ${
                   selectedTag === tag
                     ? "bg-accent text-accent-foreground font-bold shadow-md shadow-accent/20"
-                    : "border border-border/60 bg-background/50 text-muted-foreground hover:text-foreground hover:border-accent/50"
+                    : "border border-border/60 bg-background/50 text-muted-foreground hover:text-foreground hover:border-accent/50 backdrop-blur-sm"
                 }`}
               >
                 {tag}
@@ -248,46 +385,47 @@ export function Blog() {
           </div>
         </div>
 
-        {!searchQuery && selectedTag === "All" && champion && (
+        {/* Today's Featured Champion Spotlight Banner */}
+        {!searchQuery && selectedTag === "All" && activeChampion && (
           <div className="mb-14">
-            <div className="group relative overflow-hidden rounded-2xl border border-accent/40 bg-gradient-to-br from-card via-background to-card/60 p-6 md:p-10 shadow-2xl transition-all hover:border-accent">
+            <div className="group relative overflow-hidden rounded-3xl border border-accent/40 bg-gradient-to-br from-card via-[#090d18] to-card/60 p-6 md:p-10 shadow-2xl transition-all hover:border-accent">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                <div className="lg:col-span-5 relative aspect-[16/10] overflow-hidden rounded-xl border border-border/40 bg-black/60">
+                <div className="lg:col-span-5 relative aspect-[16/10] overflow-hidden rounded-2xl border border-border/40 bg-black/60 shadow-lg">
                   <img
-                    src={champion.coverUrl || champion.cover_url || FALLBACK_WINNERS[0].coverUrl}
-                    alt={champion.title}
+                    src={champCover}
+                    alt={activeChampion.title}
                     className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   />
-                  <div className="absolute top-3 left-3 rounded-lg bg-black/80 backdrop-blur-md px-3 py-1 text-[11px] font-mono font-bold text-accent border border-accent/40">
-                    🏆 TODAY'S #1 CHAMPION (SEO: {champion.seoScore || champion.seo_score || 96}/100)
+                  <div className="absolute top-3 left-3 rounded-lg bg-black/85 backdrop-blur-md px-3 py-1.5 text-[11px] font-mono font-bold text-accent border border-accent/40 shadow-md">
+                    🏆 TODAY&apos;S #1 CHAMPION (SEO: {champScore}/100)
                   </div>
                 </div>
 
                 <div className="lg:col-span-7 flex flex-col justify-between">
                   <div>
                     <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-muted-foreground mb-3">
-                      <span>📅 {champion.publishedAt || champion.published_at || "Today"}</span>
+                      <span>📅 {activeChampion.publishedAt || activeChampion.published_at || "Today"}</span>
                       <span>•</span>
-                      <span className="text-accent">Focus: {champion.targetKeyword || champion.target_keyword}</span>
+                      <span className="text-accent font-medium">Focus: {activeChampion.targetKeyword || activeChampion.target_keyword}</span>
                     </div>
 
                     <h2 className="display text-2xl sm:text-3xl md:text-4xl font-bold leading-tight group-hover:text-accent transition-colors">
-                      {champion.title}
+                      {activeChampion.title}
                     </h2>
 
-                    <div className="mt-4 p-4 rounded-xl bg-accent/10 border-l-4 border-accent text-xs sm:text-sm text-foreground/90 leading-relaxed font-sans">
-                      <strong className="text-accent uppercase tracking-wider font-mono block text-[11px] mb-1">
-                        ⚡ Direct Answer &amp; Key Takeaway:
+                    <div className="mt-4 p-5 rounded-2xl bg-accent/[0.08] border border-accent/40 border-l-4 border-l-accent text-xs sm:text-sm text-foreground/90 leading-relaxed font-sans shadow-md">
+                      <strong className="text-accent uppercase tracking-wider font-mono block text-[11px] mb-1.5 flex items-center gap-1.5">
+                        <span>⚡</span> Direct Answer &amp; Key Takeaway (TL;DR):
                       </strong>
-                      {champion.tldrSummary || champion.tldr_summary || champion.metaDescription}
+                      {activeChampion.tldrSummary || activeChampion.tldr_summary || activeChampion.metaDescription}
                     </div>
                   </div>
 
                   <div className="mt-8 flex flex-wrap items-center gap-4">
                     <button
-                      onClick={() => setSelectedArticle(champion)}
+                      onClick={() => setSelectedArticle(activeChampion)}
                       data-cursor="link"
-                      className="font-mono-alt inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3 text-xs uppercase tracking-widest text-accent-foreground font-bold hover:opacity-90 transition-opacity shadow-lg shadow-accent/25"
+                      className="font-mono-alt inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 text-xs uppercase tracking-widest text-accent-foreground font-bold hover:opacity-90 transition-opacity shadow-lg shadow-accent/25"
                     >
                       Read Full Article Details →
                     </button>
@@ -301,6 +439,7 @@ export function Blog() {
           </div>
         )}
 
+        {/* Saved Winner Articles Section Title */}
         <div className="flex items-center justify-between mb-8">
           <div>
             <h2 className="display text-2xl sm:text-3xl font-bold">
@@ -312,6 +451,7 @@ export function Blog() {
           </div>
         </div>
 
+        {/* Responsive Grid of All Past Saved Winner Articles */}
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3].map((n) => (
@@ -319,7 +459,7 @@ export function Blog() {
             ))}
           </div>
         ) : filteredBlogs.length === 0 ? (
-          <div className="text-center py-20 border border-border/40 rounded-2xl bg-card/20">
+          <div className="text-center py-20 border border-border/40 rounded-3xl bg-card/20 backdrop-blur-sm">
             <span className="text-3xl">🔍</span>
             <h3 className="display text-xl font-bold mt-4">No matching articles found</h3>
             <p className="text-xs font-mono text-muted-foreground mt-2">
@@ -327,7 +467,7 @@ export function Blog() {
             </p>
             <button
               onClick={() => { setSearchQuery(""); setSelectedTag("All"); }}
-              className="mt-4 font-mono-alt text-xs uppercase tracking-widest text-accent hover:underline"
+              className="mt-5 font-mono-alt text-xs uppercase tracking-widest text-accent hover:underline"
             >
               Reset Filters
             </button>
@@ -339,21 +479,21 @@ export function Blog() {
                 key={post.slug || idx}
                 onClick={() => setSelectedArticle(post)}
                 data-cursor="link"
-                className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border/50 bg-card/40 p-6 transition-all duration-300 hover:border-accent/60 hover:bg-card/80 cursor-pointer shadow-lg hover:shadow-2xl"
+                className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border/50 bg-card/40 p-6 transition-all duration-300 hover:border-accent/60 hover:bg-card/75 cursor-pointer shadow-lg hover:shadow-2xl backdrop-blur-md"
               >
                 <div>
-                  <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl border border-border/30 mb-4 bg-black/50">
+                  <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-border/30 mb-4 bg-black/60 shadow-md">
                     <img
                       src={post.coverUrl || post.cover_url || FALLBACK_WINNERS[idx % FALLBACK_WINNERS.length].coverUrl}
                       alt={post.title}
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute top-2.5 left-2.5 flex items-center gap-2">
-                      <span className="rounded-md bg-black/85 backdrop-blur-md px-2.5 py-0.5 text-[10px] font-mono font-bold text-accent border border-accent/40">
+                      <span className="rounded-md bg-black/85 backdrop-blur-md px-2.5 py-0.5 text-[10px] font-mono font-bold text-accent border border-accent/40 shadow-sm">
                         🏆 Winner
                       </span>
                       <span className="rounded-md bg-black/85 backdrop-blur-md px-2.5 py-0.5 text-[10px] font-mono text-foreground/80 border border-white/10">
-                        SEO: {post.seoScore || post.seo_score || 95}/100
+                        SEO: {post.seoScore || post.seo_score || 92}/100
                       </span>
                     </div>
                   </div>
@@ -381,7 +521,7 @@ export function Blog() {
                       </span>
                     ))}
                   </div>
-                  <span className="font-mono-alt text-[11px] uppercase tracking-wider text-accent font-semibold group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                  <span className="font-mono-alt text-[11px] uppercase tracking-wider text-accent font-bold group-hover:translate-x-1 transition-transform flex items-center gap-1">
                     Details →
                   </span>
                 </div>
@@ -391,15 +531,17 @@ export function Blog() {
         )}
       </div>
 
+      {/* Full Article Details View & Deep Linking Modal */}
       {selectedArticle && (
         <div
           onClick={(e) => {
             if (e.target === e.currentTarget) setSelectedArticle(null);
           }}
-          className="fixed inset-0 z-[300] flex items-center justify-center bg-black/90 backdrop-blur-xl p-4 md:p-8 overflow-y-auto animate-in fade-in duration-300"
+          className="fixed inset-0 z-[300] flex items-center justify-center bg-black/90 backdrop-blur-2xl p-4 md:p-8 overflow-y-auto animate-in fade-in duration-300"
         >
-          <div className="relative w-full max-w-4xl max-h-[92vh] overflow-hidden rounded-3xl border border-border/80 bg-background shadow-2xl flex flex-col">
-            <div className="flex items-center justify-between border-b border-border/50 px-6 py-4 bg-background/90 sticky top-0 z-50 backdrop-blur-md">
+          <div className="relative w-full max-w-4xl max-h-[92vh] overflow-hidden rounded-3xl border border-white/15 bg-[#080b12] text-foreground shadow-2xl flex flex-col">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between border-b border-white/10 px-6 py-4 bg-[#080b12]/90 sticky top-0 z-50 backdrop-blur-md">
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => setSelectedArticle(null)}
@@ -407,7 +549,7 @@ export function Blog() {
                 >
                   ← Back to Articles
                 </button>
-                <span className="hidden sm:inline text-border">|</span>
+                <span className="hidden sm:inline text-white/20">|</span>
                 <span className="hidden sm:inline-flex rounded-full bg-accent/15 border border-accent/40 px-3 py-0.5 font-mono text-[10px] uppercase text-accent font-bold">
                   🏆 Winner Blog (Score: {selectedArticle.seoScore || selectedArticle.seo_score || 96}/100)
                 </span>
@@ -417,7 +559,7 @@ export function Blog() {
                 <button
                   onClick={handleShare}
                   data-cursor="link"
-                  className="font-mono-alt text-[11px] uppercase tracking-wider px-3 py-1.5 rounded-lg border border-border/60 hover:border-accent text-muted-foreground hover:text-foreground transition-all"
+                  className="font-mono-alt text-[11px] uppercase tracking-wider px-3.5 py-1.5 rounded-lg border border-border/60 hover:border-accent text-muted-foreground hover:text-foreground transition-all shadow-sm"
                 >
                   {copyFeedback ? "✓ Link Copied!" : "🔗 Share"}
                 </button>
@@ -431,9 +573,13 @@ export function Blog() {
               </div>
             </div>
 
-            <div className="p-6 md:p-10 overflow-y-auto space-y-8">
+            {/* Modal Body */}
+            <div
+              onClick={handleArticleBodyClick}
+              className="p-6 md:p-10 overflow-y-auto space-y-8"
+            >
               {selectedArticle.coverUrl && (
-                <div className="relative w-full max-h-96 overflow-hidden rounded-2xl border border-border/50 bg-black/40">
+                <div className="relative w-full max-h-96 overflow-hidden rounded-2xl border border-white/10 bg-black/60 shadow-lg">
                   <img
                     src={selectedArticle.coverUrl || selectedArticle.cover_url}
                     alt={selectedArticle.title}
@@ -446,7 +592,7 @@ export function Blog() {
                 <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-muted-foreground mb-3">
                   <span>📅 Published: {selectedArticle.publishedAt || selectedArticle.published_at || "Today"}</span>
                   <span>•</span>
-                  <span>✍️ Abhishek Tiwari</span>
+                  <span>✍️ Author: Abhishek Tiwari</span>
                   <span>•</span>
                   <span className="text-accent font-semibold">SEO Evaluated: {selectedArticle.seoScore || selectedArticle.seo_score || 96}/100</span>
                 </div>
@@ -455,24 +601,26 @@ export function Blog() {
                   {selectedArticle.title}
                 </h1>
 
-                <div className="mt-3 flex flex-wrap gap-2">
+                <div className="mt-4 flex flex-wrap gap-2">
                   {(selectedArticle.hashtags || []).map((t) => (
-                    <span key={t} className="text-xs font-mono text-accent bg-accent/10 px-2.5 py-1 rounded-md border border-accent/20">
+                    <span key={t} className="text-xs font-mono text-accent bg-accent/10 px-3 py-1 rounded-md border border-accent/20">
                       {t}
                     </span>
                   ))}
                 </div>
               </div>
 
-              <div className="rounded-2xl border-l-4 border-accent bg-accent/10 p-5 md:p-6">
-                <strong className="text-accent font-mono text-xs uppercase tracking-widest block mb-2">
-                  ⚡ Key Takeaways / Direct Answer (TL;DR):
+              {/* ⚡ Key Takeaways / Direct Answer (TL;DR) Box */}
+              <div className="rounded-2xl border border-accent/40 bg-accent/[0.08] p-5 md:p-6 border-l-4 border-l-accent shadow-[0_0_25px_rgba(255,255,255,0.03)]">
+                <strong className="text-accent font-mono text-xs uppercase tracking-widest block mb-2 flex items-center gap-1.5">
+                  <span>⚡</span> Key Takeaways / Direct Answer (TL;DR):
                 </strong>
                 <p className="text-sm md:text-base text-foreground/90 leading-relaxed font-sans">
                   {selectedArticle.tldrSummary || selectedArticle.tldr_summary || selectedArticle.metaDescription}
                 </p>
               </div>
 
+              {/* Formatted Markdown Body with Styled Code Blocks & Copy Button */}
               <div
                 className="prose prose-invert max-w-none text-muted-foreground font-sans leading-relaxed text-sm md:text-base"
                 dangerouslySetInnerHTML={{
@@ -485,9 +633,10 @@ export function Blog() {
                 }}
               />
 
-              <div className="border-t border-border/50 pt-8 mt-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              {/* Author & Footer Social Links */}
+              <div className="border-t border-white/10 pt-8 mt-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
-                  <div className="h-12 w-12 rounded-full bg-accent/20 border border-accent/50 flex items-center justify-center font-bold text-accent font-mono text-lg">
+                  <div className="h-12 w-12 rounded-full bg-accent/20 border border-accent/50 flex items-center justify-center font-bold text-accent font-mono text-lg shadow-sm">
                     AT
                   </div>
                   <div>
@@ -505,7 +654,7 @@ export function Blog() {
                   >
                     LinkedIn ↗
                   </a>
-                  <span className="text-border">•</span>
+                  <span className="text-white/20">•</span>
                   <a
                     href="https://github.com/abhishektiwari1540"
                     target="_blank"

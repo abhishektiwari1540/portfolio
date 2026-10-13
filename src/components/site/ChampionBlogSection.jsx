@@ -220,8 +220,6 @@ export function ChampionBlogSection() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("champion"); // "champion" | "all"
   const [selectedArticle, setSelectedArticle] = useState(null);
-  const [triggering, setTriggering] = useState(false);
-  const [toastMessage, setToastMessage] = useState(null);
 
   const fetchBlogs = async () => {
     setLoading(true);
@@ -268,29 +266,6 @@ export function ChampionBlogSection() {
     fetchBlogs();
   }, []);
 
-  const handleGenerateTrigger = async () => {
-    setTriggering(true);
-    setToastMessage("Triggering generation of 12 new candidate blogs & AI self-ranking...");
-    try {
-      const res = await fetch("https://career-digest.vercel.app/api/blogs/generate", {
-        method: "POST",
-      });
-      if (res.ok) {
-        setToastMessage("✨ 12 Candidate Blogs generated! Refreshing blog list...");
-        setTimeout(() => fetchBlogs(), 2000);
-      } else {
-        setToastMessage("Generation triggered via API endpoint.");
-      }
-    } catch (err) {
-      setToastMessage("API contacted. Refreshing blog list.");
-    } finally {
-      setTimeout(() => {
-        setTriggering(false);
-        setToastMessage(null);
-      }, 4000);
-    }
-  };
-
   const activeChampion = champion || SAMPLE_CANDIDATES[0];
   const activeCandidates = candidates.length ? candidates : SAMPLE_CANDIDATES;
 
@@ -308,24 +283,7 @@ export function ChampionBlogSection() {
               Career Digest &amp; Articles
             </h2>
           </div>
-
-          <div className="flex flex-wrap items-center gap-3">
-            <button
-              onClick={handleGenerateTrigger}
-              disabled={triggering}
-              data-cursor="link"
-              className="font-mono-alt inline-flex items-center gap-2 rounded-xl border border-border bg-background/80 px-4 py-2.5 text-xs uppercase tracking-wider text-muted-foreground hover:border-accent hover:text-foreground transition-all disabled:opacity-50"
-            >
-              {triggering ? "Generating 12 Posts..." : "⚡ Trigger AI Generation"}
-            </button>
-          </div>
         </div>
-
-        {toastMessage && (
-          <div className="mb-6 rounded-xl border border-accent/30 bg-accent/10 p-3.5 text-xs text-accent font-mono animate-in fade-in">
-            {toastMessage}
-          </div>
-        )}
 
         {/* Navigation Tabs */}
         <div className="flex items-center gap-3 border-b border-border/40 pb-4 mb-8">

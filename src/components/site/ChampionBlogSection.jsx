@@ -12,44 +12,44 @@ function renderMarkdown(md) {
     // Code blocks with syntax header and Copy button
     .replace(/```([a-zA-Z0-9_-]*)\n([\s\S]*?)```/g, (match, lang, code) => {
       const displayLang = lang || "code";
-      return `<div class="code-block-container my-6 rounded-2xl overflow-hidden border border-border/60 bg-secondary/40 shadow-xl">
-        <div class="flex items-center justify-between px-4 py-2.5 border-b border-border/50 bg-card/60">
-          <span class="text-[11px] font-mono text-accent uppercase tracking-wider font-semibold">${displayLang}</span>
-          <button type="button" data-copy-code class="copy-code-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-secondary hover:bg-secondary/80 text-muted-foreground hover:text-foreground text-[10px] font-mono uppercase tracking-wider transition-all border border-border/40">
+      return `<div class="code-block-container my-6 rounded-2xl overflow-hidden border border-border/70 bg-background/90 shadow-lg">
+        <div class="flex items-center justify-between px-4 py-2.5 border-b border-border/60 bg-secondary/40">
+          <span class="text-[10px] font-mono-alt text-accent uppercase tracking-wider font-semibold">${displayLang}</span>
+          <button type="button" data-copy-code class="copy-code-btn inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-border/60 bg-card/60 hover:bg-card text-muted-foreground hover:text-foreground text-[10px] font-mono-alt uppercase tracking-wider transition-all">
             <span>Copy</span>
           </button>
         </div>
-        <pre class="p-4 overflow-x-auto font-mono text-xs text-foreground/90 leading-relaxed bg-card/50"><code>${code}</code></pre>
+        <pre class="p-4 overflow-x-auto font-mono text-xs text-foreground/90 leading-relaxed"><code>${code}</code></pre>
       </div>`;
     })
     .replace(/```([\s\S]*?)```/g, (match, code) => {
-      return `<div class="code-block-container my-6 rounded-2xl overflow-hidden border border-border/60 bg-secondary/40 shadow-xl">
-        <div class="flex items-center justify-between px-4 py-2.5 border-b border-border/50 bg-card/60">
-          <span class="text-[11px] font-mono text-accent uppercase tracking-wider font-semibold">Snippet</span>
-          <button type="button" data-copy-code class="copy-code-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-secondary hover:bg-secondary/80 text-muted-foreground hover:text-foreground text-[10px] font-mono uppercase tracking-wider transition-all border border-border/40">
+      return `<div class="code-block-container my-6 rounded-2xl overflow-hidden border border-border/70 bg-background/90 shadow-lg">
+        <div class="flex items-center justify-between px-4 py-2.5 border-b border-border/60 bg-secondary/40">
+          <span class="text-[10px] font-mono-alt text-accent uppercase tracking-wider font-semibold">Snippet</span>
+          <button type="button" data-copy-code class="copy-code-btn inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-border/60 bg-card/60 hover:bg-card text-muted-foreground hover:text-foreground text-[10px] font-mono-alt uppercase tracking-wider transition-all">
             <span>Copy</span>
           </button>
         </div>
-        <pre class="p-4 overflow-x-auto font-mono text-xs text-foreground/90 leading-relaxed bg-card/50"><code>${code}</code></pre>
+        <pre class="p-4 overflow-x-auto font-mono text-xs text-foreground/90 leading-relaxed"><code>${code}</code></pre>
       </div>`;
     })
     // Inline code
-    .replace(/`([^`]+)`/g, '<code class="bg-accent/15 text-accent px-1.5 py-0.5 rounded font-mono text-xs">$1</code>')
+    .replace(/`([^`]+)`/g, '<code class="bg-accent/15 text-accent px-1.5 py-0.5 rounded font-mono text-xs font-semibold">$1</code>')
     // Headings
-    .replace(/^### (.*$)/gim, '<h3 class="text-xl font-bold text-foreground mt-8 mb-3">$1</h3>')
-    .replace(/^## (.*$)/gim, '<h2 class="text-2xl font-bold text-foreground mt-10 mb-4 border-b border-border/40 pb-2">$1</h2>')
-    .replace(/^# (.*$)/gim, '<h1 class="text-3xl font-bold text-foreground mt-12 mb-6">$1</h1>')
+    .replace(/^### (.*$)/gim, '<h3 class="display text-xl font-bold text-foreground mt-8 mb-3 leading-snug">$1</h3>')
+    .replace(/^## (.*$)/gim, '<h2 class="display text-2xl font-bold text-foreground mt-10 mb-4 border-b border-border/40 pb-2 leading-snug">$1</h2>')
+    .replace(/^# (.*$)/gim, '<h1 class="display text-3xl font-bold text-foreground mt-12 mb-6 leading-snug">$1</h1>')
     // Bold & Italic
     .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-foreground">$1</strong>')
-    .replace(/\*(.*?)\*/g, '<em class="italic text-foreground/80">$1</em>')
+    .replace(/\*(.*?)\*/g, '<em class="italic text-foreground/90">$1</em>')
     // Links
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-accent underline underline-offset-4 hover:opacity-80 transition-opacity">$1</a>')
     // Unordered lists
-    .replace(/^\s*[-*]\s+(.*$)/gim, '<li class="ml-4 list-disc text-muted-foreground my-1.5">$1</li>')
+    .replace(/^\s*[-*]\s+(.*$)/gim, '<li class="ml-4 list-disc text-muted-foreground my-1.5 font-sans">$1</li>')
     // Paragraphs
-    .replace(/\n\n+/g, '</p><p class="my-4 leading-relaxed text-muted-foreground">');
+    .replace(/\n\n+/g, '</p><p class="my-4 leading-relaxed text-muted-foreground font-sans">');
 
-  return '<p class="my-4 leading-relaxed text-muted-foreground">' + html + '</p>';
+  return '<p class="my-4 leading-relaxed text-muted-foreground font-sans">' + html + '</p>';
 }
 
 const SAMPLE_CHAMPION = {
@@ -151,10 +151,10 @@ export function ChampionBlogSection() {
         <div className="flex flex-wrap items-center justify-between gap-4 mb-10">
           <div>
             <span className="font-mono-alt inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-3.5 py-1 text-[11px] uppercase tracking-[0.2em] text-accent">
-              <span className="h-2 w-2 rounded-full bg-accent animate-pulse" />
+              <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
               Daily AI Digest &amp; Technical Blog
             </span>
-            <h2 className="display mt-4 text-3xl sm:text-4xl md:text-5xl font-black">
+            <h2 className="display mt-4 text-3xl sm:text-4xl md:text-5xl font-black text-foreground">
               Today&apos;s #1 Winner Tech Blog
             </h2>
             <p className="mt-2 text-xs sm:text-sm font-mono text-muted-foreground">
@@ -165,7 +165,7 @@ export function ChampionBlogSection() {
           <Link
             to="/blog"
             data-cursor="link"
-            className="font-mono-alt inline-flex items-center gap-2 rounded-xl border border-border/80 bg-background/80 px-5 py-2.5 text-xs uppercase tracking-wider text-muted-foreground hover:border-accent hover:text-foreground transition-all shadow-sm"
+            className="font-mono-alt inline-flex items-center gap-2 rounded-full border border-border/80 bg-card/60 px-5 py-2.5 text-xs uppercase tracking-wider text-muted-foreground hover:border-foreground hover:text-foreground transition-all shadow-sm"
           >
             Browse All Winner Blogs Archive →
           </Link>
@@ -173,21 +173,21 @@ export function ChampionBlogSection() {
 
         {/* Today's #1 Winner Spotlight Card */}
         {loading ? (
-          <div className="h-80 w-full rounded-2xl border border-border/50 bg-black/40 animate-pulse flex items-center justify-center">
+          <div className="h-80 w-full rounded-3xl border border-border/50 bg-card/30 animate-pulse flex items-center justify-center">
             <span className="font-mono text-xs text-muted-foreground">Loading Today&apos;s #1 Champion Article...</span>
           </div>
         ) : (
-          <div className="group relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-card/95 via-background to-card/75 p-6 md:p-10 transition-all duration-500 hover:border-accent/50 shadow-2xl">
+          <div className="group relative overflow-hidden rounded-3xl border border-border/70 bg-card/50 backdrop-blur-xl p-6 md:p-10 transition-all duration-500 hover:border-accent/60 hover:bg-card/70 shadow-2xl">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               {/* High-res cover image with hover scale */}
-              <div className="lg:col-span-5 relative aspect-[16/10] overflow-hidden rounded-2xl border border-border/40 bg-black/60 shadow-lg">
+              <div className="lg:col-span-5 relative aspect-[16/10] overflow-hidden rounded-2xl border border-border/50 bg-background/50 shadow-lg">
                 <img
                   id="blog-cover"
                   src={coverImage}
                   alt={activeChampion.title}
                   className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
-                <div className="absolute top-3 left-3 rounded-lg bg-black/85 backdrop-blur-md px-3.5 py-1.5 text-[11px] font-mono font-bold text-accent border border-accent/40 shadow-md">
+                <div className="absolute top-3 left-3 rounded-full bg-background/90 backdrop-blur-md px-3.5 py-1 text-[10px] font-mono-alt font-bold uppercase tracking-wider text-accent border border-accent/40 shadow-sm">
                   🏆 Today&apos;s #1 Winner (SEO: {score}/100)
                 </div>
               </div>
@@ -201,13 +201,13 @@ export function ChampionBlogSection() {
                     <span className="text-accent font-medium">Focus: {keyword}</span>
                   </div>
 
-                  <h3 id="blog-title" className="display text-2xl sm:text-3xl md:text-4xl font-bold leading-snug group-hover:text-accent transition-colors">
+                  <h3 id="blog-title" className="display text-2xl sm:text-3xl md:text-4xl font-bold leading-[1.0] text-foreground group-hover:text-accent transition-colors">
                     {activeChampion.title}
                   </h3>
 
-                  {/* "⚡ Direct Answer & Key Takeaway (TL;DR)" callout box in glowing accent border */}
-                  <div className="mt-5 p-5 rounded-2xl bg-accent/[0.08] border border-accent/40 shadow-[0_0_25px_rgba(255,255,255,0.03)] border-l-4 border-l-accent">
-                    <strong className="text-accent uppercase tracking-wider font-mono block text-[11px] mb-1.5 flex items-center gap-2">
+                  {/* "⚡ Direct Answer & Key Takeaway (TL;DR)" callout box */}
+                  <div className="mt-5 p-5 rounded-2xl bg-accent/[0.06] border border-accent/30 border-l-4 border-l-accent shadow-sm">
+                    <strong className="text-accent uppercase tracking-wider font-mono-alt block text-[11px] font-bold mb-1.5 flex items-center gap-2">
                       <span>⚡</span> Direct Answer &amp; Key Takeaway (TL;DR):
                     </strong>
                     <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed font-sans">
@@ -221,7 +221,7 @@ export function ChampionBlogSection() {
                   <button
                     onClick={() => setSelectedArticle(activeChampion)}
                     data-cursor="link"
-                    className="font-mono-alt inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 text-xs uppercase tracking-widest text-accent-foreground font-bold hover:opacity-90 transition-opacity shadow-lg shadow-accent/25"
+                    className="font-mono-alt inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3.5 text-xs uppercase tracking-widest text-accent-foreground font-bold hover:opacity-90 transition-opacity shadow-lg shadow-accent/25"
                   >
                     Read Full Article →
                   </button>
@@ -229,7 +229,7 @@ export function ChampionBlogSection() {
                   <Link
                     to="/blog"
                     data-cursor="link"
-                    className="font-mono-alt inline-flex items-center gap-2 rounded-xl border border-border/80 bg-background/80 px-6 py-3.5 text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground hover:border-accent transition-all shadow-sm"
+                    className="font-mono-alt inline-flex items-center gap-2 rounded-full border border-border/80 bg-card/60 px-6 py-3.5 text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground hover:border-foreground transition-all shadow-sm"
                   >
                     Browse All Winner Blogs Archive →
                   </Link>
@@ -246,13 +246,13 @@ export function ChampionBlogSection() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setSelectedArticle(null);
           }}
-          className="fixed inset-0 z-[300] flex items-center justify-center bg-background/85 backdrop-blur-2xl p-4 md:p-8 overflow-y-auto animate-in fade-in duration-300"
+          className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-xl p-3 sm:p-6 md:p-8 overflow-y-auto animate-in fade-in duration-300"
         >
-          <div className="relative w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-3xl border border-border/80 bg-card text-foreground shadow-2xl flex flex-col">
+          <div className="relative w-full max-w-4xl max-h-[92vh] flex flex-col rounded-3xl border border-border/70 bg-card text-foreground shadow-[0_30px_90px_rgba(0,0,0,0.8)] overflow-hidden transition-all duration-300">
             {/* Modal Header */}
-            <div className="flex items-center justify-between border-b border-border/50 px-6 py-4 bg-card/95 sticky top-0 z-50 backdrop-blur-md">
+            <div className="flex items-center justify-between border-b border-border/60 px-6 py-4 bg-card/90 sticky top-0 z-50 backdrop-blur-md">
               <div className="flex items-center gap-3">
-                <span className="rounded-full bg-accent/20 border border-accent/40 px-3 py-0.5 font-mono text-[10px] uppercase text-accent font-bold">
+                <span className="rounded-full bg-accent/15 border border-accent/40 px-3 py-0.5 font-mono text-[10px] uppercase text-accent font-bold">
                   🏆 #1 Champion Winner
                 </span>
                 <span className="font-mono text-xs text-muted-foreground">
@@ -269,7 +269,7 @@ export function ChampionBlogSection() {
                 </Link>
                 <button
                   onClick={() => setSelectedArticle(null)}
-                  className="rounded-full p-2 text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors cursor-pointer"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-border/60 bg-background/60 text-foreground transition-all hover:bg-foreground hover:text-background hover:scale-105 active:scale-95 cursor-pointer"
                   aria-label="Close"
                 >
                   ✕
@@ -283,7 +283,7 @@ export function ChampionBlogSection() {
               className="p-6 md:p-10 overflow-y-auto space-y-6"
             >
               {coverImage && (
-                <div className="relative w-full max-h-80 overflow-hidden rounded-2xl border border-border/50 bg-secondary/50 shadow-md">
+                <div className="relative w-full max-h-80 overflow-hidden rounded-2xl border border-border/50 bg-background/60 shadow-lg">
                   <img
                     src={coverImage}
                     alt={selectedArticle.title}
@@ -301,13 +301,13 @@ export function ChampionBlogSection() {
                   <span className="text-accent font-semibold">SEO Evaluated: {score}/100</span>
                 </div>
 
-                <h1 className="display text-3xl sm:text-4xl font-extrabold leading-tight text-foreground">
+                <h1 className="display text-3xl sm:text-4xl font-extrabold leading-[1.0] text-foreground">
                   {selectedArticle.title}
                 </h1>
               </div>
 
-              <div className="p-5 rounded-2xl bg-accent/[0.08] border border-accent/40 shadow-sm border-l-4 border-l-accent">
-                <strong className="text-accent uppercase tracking-wider font-mono block text-[11px] mb-1.5 flex items-center gap-2">
+              <div className="p-5 rounded-2xl bg-accent/[0.06] border border-accent/30 border-l-4 border-l-accent shadow-sm">
+                <strong className="text-accent uppercase tracking-wider font-mono-alt block text-[11px] font-bold mb-1.5 flex items-center gap-2">
                   <span>⚡</span> Direct Answer &amp; Key Takeaway (TL;DR):
                 </strong>
                 <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed font-sans">
@@ -317,7 +317,7 @@ export function ChampionBlogSection() {
 
               <div
                 id="blog-content"
-                className="prose prose-neutral dark:prose-invert max-w-none text-muted-foreground font-sans leading-relaxed text-sm md:text-base"
+                className="prose prose-invert max-w-none text-muted-foreground font-sans leading-relaxed text-sm md:text-base"
                 dangerouslySetInnerHTML={{
                   __html: renderMarkdown(
                     selectedArticle.contentMarkdown ||

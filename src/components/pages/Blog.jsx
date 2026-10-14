@@ -1,7 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
 import { Link } from "@tanstack/react-router";
 import { registerGsap } from "@/lib/gsap";
-import { useSplitReveal } from "@/components/site/useSplitReveal";
 import { Footer } from "@/components/site/Footer";
 
 function renderMarkdown(md) {
@@ -14,44 +13,44 @@ function renderMarkdown(md) {
     // Code blocks with syntax header and Copy button
     .replace(/```([a-zA-Z0-9_-]*)\n([\s\S]*?)```/g, (match, lang, code) => {
       const displayLang = lang || "code";
-      return `<div class="code-block-container my-6 rounded-2xl overflow-hidden border border-border/60 bg-secondary/40 shadow-xl">
-        <div class="flex items-center justify-between px-4 py-2.5 border-b border-border/50 bg-card/60">
-          <span class="text-[11px] font-mono text-accent uppercase tracking-wider font-semibold">${displayLang}</span>
-          <button type="button" data-copy-code class="copy-code-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-secondary hover:bg-secondary/80 text-muted-foreground hover:text-foreground text-[10px] font-mono uppercase tracking-wider transition-all border border-border/40">
+      return `<div class="code-block-container my-6 rounded-2xl overflow-hidden border border-border/70 bg-background/90 shadow-lg">
+        <div class="flex items-center justify-between px-4 py-2.5 border-b border-border/60 bg-secondary/40">
+          <span class="text-[10px] font-mono-alt text-accent uppercase tracking-wider font-semibold">${displayLang}</span>
+          <button type="button" data-copy-code class="copy-code-btn inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-border/60 bg-card/60 hover:bg-card text-muted-foreground hover:text-foreground text-[10px] font-mono-alt uppercase tracking-wider transition-all">
             <span>Copy</span>
           </button>
         </div>
-        <pre class="p-4 overflow-x-auto font-mono text-xs text-foreground/90 leading-relaxed bg-card/50"><code>${code}</code></pre>
+        <pre class="p-4 overflow-x-auto font-mono text-xs text-foreground/90 leading-relaxed"><code>${code}</code></pre>
       </div>`;
     })
     .replace(/```([\s\S]*?)```/g, (match, code) => {
-      return `<div class="code-block-container my-6 rounded-2xl overflow-hidden border border-border/60 bg-secondary/40 shadow-xl">
-        <div class="flex items-center justify-between px-4 py-2.5 border-b border-border/50 bg-card/60">
-          <span class="text-[11px] font-mono text-accent uppercase tracking-wider font-semibold">Snippet</span>
-          <button type="button" data-copy-code class="copy-code-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-secondary hover:bg-secondary/80 text-muted-foreground hover:text-foreground text-[10px] font-mono uppercase tracking-wider transition-all border border-border/40">
+      return `<div class="code-block-container my-6 rounded-2xl overflow-hidden border border-border/70 bg-background/90 shadow-lg">
+        <div class="flex items-center justify-between px-4 py-2.5 border-b border-border/60 bg-secondary/40">
+          <span class="text-[10px] font-mono-alt text-accent uppercase tracking-wider font-semibold">Snippet</span>
+          <button type="button" data-copy-code class="copy-code-btn inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-border/60 bg-card/60 hover:bg-card text-muted-foreground hover:text-foreground text-[10px] font-mono-alt uppercase tracking-wider transition-all">
             <span>Copy</span>
           </button>
         </div>
-        <pre class="p-4 overflow-x-auto font-mono text-xs text-foreground/90 leading-relaxed bg-card/50"><code>${code}</code></pre>
+        <pre class="p-4 overflow-x-auto font-mono text-xs text-foreground/90 leading-relaxed"><code>${code}</code></pre>
       </div>`;
     })
     // Inline code
-    .replace(/`([^`]+)`/g, '<code class="bg-accent/15 text-accent px-1.5 py-0.5 rounded font-mono text-xs">$1</code>')
+    .replace(/`([^`]+)`/g, '<code class="bg-accent/15 text-accent px-1.5 py-0.5 rounded font-mono text-xs font-semibold">$1</code>')
     // Headings
-    .replace(/^### (.*$)/gim, '<h3 class="text-xl font-bold text-foreground mt-8 mb-3">$1</h3>')
-    .replace(/^## (.*$)/gim, '<h2 class="text-2xl font-bold text-foreground mt-10 mb-4 border-b border-border/40 pb-2">$1</h2>')
-    .replace(/^# (.*$)/gim, '<h1 class="text-3xl font-bold text-foreground mt-12 mb-6">$1</h1>')
+    .replace(/^### (.*$)/gim, '<h3 class="display text-xl font-bold text-foreground mt-8 mb-3 leading-snug">$1</h3>')
+    .replace(/^## (.*$)/gim, '<h2 class="display text-2xl font-bold text-foreground mt-10 mb-4 border-b border-border/40 pb-2 leading-snug">$1</h2>')
+    .replace(/^# (.*$)/gim, '<h1 class="display text-3xl font-bold text-foreground mt-12 mb-6 leading-snug">$1</h1>')
     // Bold & Italic
     .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-foreground">$1</strong>')
-    .replace(/\*(.*?)\*/g, '<em class="italic text-foreground/80">$1</em>')
+    .replace(/\*(.*?)\*/g, '<em class="italic text-foreground/90">$1</em>')
     // Links
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-accent underline underline-offset-4 hover:opacity-80 transition-opacity">$1</a>')
     // Unordered lists
-    .replace(/^\s*[-*]\s+(.*$)/gim, '<li class="ml-4 list-disc text-muted-foreground my-1.5">$1</li>')
+    .replace(/^\s*[-*]\s+(.*$)/gim, '<li class="ml-4 list-disc text-muted-foreground my-1.5 font-sans">$1</li>')
     // Paragraphs
-    .replace(/\n\n+/g, '</p><p class="my-4 leading-relaxed text-muted-foreground">');
+    .replace(/\n\n+/g, '</p><p class="my-4 leading-relaxed text-muted-foreground font-sans">');
 
-  return '<p class="my-4 leading-relaxed text-muted-foreground">' + html + '</p>';
+  return '<p class="my-4 leading-relaxed text-muted-foreground font-sans">' + html + '</p>';
 }
 
 const DEFAULT_FILTER_TAGS = ["All", "#TypeScript", "#NodeJS", "#Microservices", "#AI", "#Architecture"];
@@ -128,8 +127,6 @@ export function Blog() {
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [copyFeedback, setCopyFeedback] = useState(false);
 
-  const header = useSplitReveal({ by: "words", scroll: false, stagger: 0.05 });
-
   useEffect(() => {
     registerGsap();
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -140,7 +137,6 @@ export function Blog() {
     async function loadBlogsArchive() {
       setLoading(true);
       try {
-        // Fetch champion and all saved winner blogs
         const [champRes, allRes] = await Promise.all([
           fetch("https://career-digest.vercel.app/api/blogs/champion").catch(() => null),
           fetch("https://career-digest.vercel.app/api/blogs").catch(() => null)
@@ -317,80 +313,81 @@ export function Blog() {
   const champCover = activeChampion.coverUrl || activeChampion.cover_url || FALLBACK_WINNERS[0].coverUrl;
 
   return (
-    <main className="grain min-h-screen bg-background text-foreground selection:bg-accent/30 selection:text-accent">
-      {/* Hero Header Section */}
-      <section className="px-6 pb-10 pt-28 md:px-10 md:pb-14 md:pt-36 max-w-7xl mx-auto">
-        {/* Navigation Breadcrumb / Engine Status Bar */}
-        <div className="flex items-center justify-between mb-8 pb-4 border-b border-border/40">
+    <main className="grain min-h-screen text-foreground pt-28 pb-16 px-6 md:px-10">
+      <div className="max-w-7xl mx-auto">
+        {/* Top Breadcrumb Navigation */}
+        <div className="flex items-center justify-between mb-10 pb-4 border-b border-border/50">
           <Link
             to="/"
             data-cursor="link"
-            className="font-mono-alt text-xs uppercase tracking-widest text-muted-foreground hover:text-accent flex items-center gap-2 transition-colors"
+            className="font-mono-alt text-xs uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground flex items-center gap-2 transition-colors"
           >
             ← Back to Home
           </Link>
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 rounded-full bg-accent animate-pulse" />
-            <span className="font-mono-alt text-[11px] uppercase tracking-widest text-accent font-semibold">
+            <span className="font-mono-alt text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-accent font-semibold">
               Daily Auto-Sync Engine Active
             </span>
           </div>
         </div>
 
-        {/* Hero Title & Subtitle */}
-        <div className="max-w-4xl">
-          <span className="font-mono-alt inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-4 py-1.5 text-[11px] uppercase tracking-[0.2em] text-accent mb-5">
-            🏆 Daily AI Champion Blog Archive
+        {/* Hero Header */}
+        <div className="max-w-4xl mb-12">
+          <span className="font-mono-alt inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-4 py-1.5 text-[11px] uppercase tracking-[0.2em] text-accent">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+            Daily AI Champion Blog Archive
           </span>
-          <h1
-            ref={header}
-            className="display text-[clamp(2.5rem,7vw,6.5rem)] leading-[0.92] text-foreground tracking-tight"
-          >
+          <h1 className="display mt-4 text-[clamp(2.2rem,5.5vw,4.5rem)] text-foreground leading-[0.95] tracking-tight">
             Architectural Deep Dives &amp; Technical Articles
           </h1>
-          <p className="mt-6 text-base sm:text-lg text-muted-foreground leading-relaxed font-sans max-w-3xl">
+          <p className="mt-4 text-base sm:text-lg text-muted-foreground leading-relaxed font-sans max-w-2xl">
             Each day, an automated 12-blog competition executes across distributed systems, Node.js, and AI.
             Only the highest-scoring winner is selected and stored in this permanent technical archive.
           </p>
         </div>
-      </section>
 
-      {/* Main Archive Section */}
-      <section className="px-6 pb-24 md:px-10 max-w-7xl mx-auto">
-        {/* Search & Tag Filter Pills */}
-        <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-5 mb-12 pb-6 border-b border-border/40">
-          <div className="relative flex-1 max-w-md">
+        {/* Search & Tag Filter Section */}
+        <div className="space-y-6 mb-12 pb-8 border-b border-border/50">
+          {/* Search Bar */}
+          <div className="relative max-w-xl">
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-muted-foreground">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
             <input
               type="text"
-              placeholder="Search by title, keywords, or TL;DR..."
+              placeholder="Search winner articles by title, keywords, or topics..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-2xl border border-border/70 bg-card/60 px-4 py-3 pl-10 text-xs font-mono text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent transition-all backdrop-blur-md shadow-sm"
+              className="w-full rounded-full border border-border/70 bg-card/40 pl-11 pr-10 py-3 text-xs font-mono text-foreground placeholder:text-muted-foreground focus:border-foreground/80 focus:outline-none focus:ring-1 focus:ring-foreground/50 transition-all backdrop-blur-md"
             />
-            <span className="absolute left-3.5 top-3.5 text-muted-foreground text-xs">🔍</span>
             {searchQuery && (
               <button
+                type="button"
                 onClick={() => setSearchQuery("")}
-                className="absolute right-3.5 top-3 text-xs text-muted-foreground hover:text-foreground"
-                aria-label="Clear search"
+                className="absolute inset-y-0 right-0 pr-4 flex items-center text-xs font-mono text-muted-foreground hover:text-foreground"
               >
                 ✕
               </button>
             )}
           </div>
 
+          {/* Tag Pills matching Home.jsx */}
           <div className="flex flex-wrap items-center gap-2">
             {allTags.map((tag) => {
-              const isActive = selectedTag === tag;
+              const active = selectedTag.toLowerCase() === tag.toLowerCase();
               return (
                 <button
                   key={tag}
                   onClick={() => setSelectedTag(tag)}
                   data-cursor="link"
-                  className={`font-mono-alt px-4 py-2 rounded-full text-[10px] uppercase tracking-[0.18em] transition-all cursor-pointer ${
-                    isActive
-                      ? "bg-accent text-accent-foreground font-bold shadow-md shadow-accent/20 border border-accent"
-                      : "border border-border/70 bg-secondary/50 text-foreground/80 hover:border-accent/60 hover:text-foreground backdrop-blur-sm"
+                  aria-pressed={active}
+                  className={`font-mono-alt rounded-full border px-4 py-2 text-[10px] md:text-[11px] uppercase tracking-[0.18em] transition-all duration-300 ${
+                    active
+                      ? "border-foreground bg-foreground text-background font-semibold shadow-sm"
+                      : "border-border/70 bg-card/40 text-muted-foreground hover:border-foreground/50 hover:text-foreground"
                   }`}
                 >
                   {tag}
@@ -403,15 +400,15 @@ export function Blog() {
         {/* Today's Featured Champion Spotlight Banner */}
         {!searchQuery && selectedTag === "All" && activeChampion && (
           <div className="mb-16">
-            <div className="group relative overflow-hidden rounded-3xl border border-accent/40 bg-gradient-to-br from-card/95 via-card to-card/75 p-6 md:p-10 shadow-2xl transition-all duration-500 hover:border-accent hover:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.3)]">
+            <div className="group relative overflow-hidden rounded-3xl border border-border/70 bg-card/50 backdrop-blur-xl p-6 md:p-10 shadow-2xl transition-all duration-500 hover:border-accent/60 hover:bg-card/70">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                <div className="lg:col-span-5 relative aspect-[16/10] overflow-hidden rounded-2xl border border-border/50 bg-secondary/50 shadow-lg">
+                <div className="lg:col-span-5 relative aspect-[16/10] overflow-hidden rounded-2xl border border-border/50 bg-background/50 shadow-lg">
                   <img
                     src={champCover}
                     alt={activeChampion.title}
                     className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   />
-                  <div className="absolute top-3 left-3 rounded-lg bg-background/90 backdrop-blur-md px-3 py-1.5 text-[11px] font-mono font-bold text-accent border border-accent/40 shadow-md">
+                  <div className="absolute top-3 left-3 rounded-full bg-background/90 backdrop-blur-md px-3.5 py-1 text-[10px] font-mono-alt font-bold uppercase tracking-wider text-accent border border-accent/40 shadow-sm">
                     🏆 TODAY&apos;S #1 CHAMPION (SEO: {champScore}/100)
                   </div>
                 </div>
@@ -424,15 +421,17 @@ export function Blog() {
                       <span className="text-accent font-medium">Focus: {activeChampion.targetKeyword || activeChampion.target_keyword}</span>
                     </div>
 
-                    <h2 className="display text-2xl sm:text-3xl md:text-4xl font-bold leading-tight text-foreground group-hover:text-accent transition-colors">
+                    <h2 className="display text-2xl sm:text-3xl md:text-4xl font-bold leading-[1.0] text-foreground group-hover:text-accent transition-colors">
                       {activeChampion.title}
                     </h2>
 
-                    <div className="mt-5 p-5 rounded-2xl bg-accent/[0.08] border border-accent/40 border-l-4 border-l-accent text-xs sm:text-sm text-foreground/90 leading-relaxed font-sans shadow-sm">
-                      <strong className="text-accent uppercase tracking-wider font-mono block text-[11px] mb-1.5 flex items-center gap-1.5">
+                    <div className="mt-5 p-5 rounded-2xl bg-accent/[0.06] border border-accent/30 border-l-4 border-l-accent shadow-sm">
+                      <strong className="text-accent uppercase tracking-wider font-mono-alt block text-[11px] font-bold mb-1.5 flex items-center gap-2">
                         <span>⚡</span> Direct Answer &amp; Key Takeaway (TL;DR):
                       </strong>
-                      {activeChampion.tldrSummary || activeChampion.tldr_summary || activeChampion.metaDescription}
+                      <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed font-sans">
+                        {activeChampion.tldrSummary || activeChampion.tldr_summary || activeChampion.metaDescription}
+                      </p>
                     </div>
                   </div>
 
@@ -440,7 +439,7 @@ export function Blog() {
                     <button
                       onClick={() => setSelectedArticle(activeChampion)}
                       data-cursor="link"
-                      className="font-mono-alt inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 text-xs uppercase tracking-widest text-accent-foreground font-bold hover:opacity-90 transition-opacity shadow-lg shadow-accent/25"
+                      className="font-mono-alt inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3.5 text-xs uppercase tracking-widest text-accent-foreground font-bold hover:opacity-90 transition-opacity shadow-lg shadow-accent/20"
                     >
                       Read Full Article Details →
                     </button>
@@ -470,19 +469,19 @@ export function Blog() {
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3].map((n) => (
-              <div key={n} className="h-96 rounded-2xl border border-border/40 bg-card/30 animate-pulse" />
+              <div key={n} className="h-96 rounded-3xl border border-border/40 bg-card/30 animate-pulse" />
             ))}
           </div>
         ) : filteredBlogs.length === 0 ? (
           <div className="text-center py-20 border border-border/40 rounded-3xl bg-card/20 backdrop-blur-sm">
             <span className="text-3xl">🔍</span>
-            <h3 className="display text-xl font-bold mt-4 text-foreground">No matching articles found</h3>
+            <h3 className="display text-xl font-bold text-foreground mt-4">No matching articles found</h3>
             <p className="text-xs font-mono text-muted-foreground mt-2">
               Try adjusting your search query or selecting a different topic tag.
             </p>
             <button
               onClick={() => { setSearchQuery(""); setSelectedTag("All"); }}
-              className="mt-5 font-mono-alt text-xs uppercase tracking-widest text-accent hover:underline cursor-pointer"
+              className="mt-5 font-mono-alt text-xs uppercase tracking-widest text-accent hover:underline"
             >
               Reset Filters
             </button>
@@ -494,20 +493,20 @@ export function Blog() {
                 key={post.slug || idx}
                 onClick={() => setSelectedArticle(post)}
                 data-cursor="link"
-                className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border/60 bg-card/50 p-6 transition-all duration-300 hover:border-accent/60 hover:bg-card/80 cursor-pointer shadow-md hover:shadow-2xl backdrop-blur-md"
+                className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border/60 bg-card/40 backdrop-blur-md p-6 transition-all duration-300 hover:border-accent hover:bg-card/75 hover:shadow-2xl cursor-pointer"
               >
                 <div>
-                  <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-border/40 mb-4 bg-secondary/40 shadow-sm">
+                  <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-border/40 mb-4 bg-background/60 shadow-md">
                     <img
                       src={post.coverUrl || post.cover_url || FALLBACK_WINNERS[idx % FALLBACK_WINNERS.length].coverUrl}
                       alt={post.title}
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute top-2.5 left-2.5 flex items-center gap-2">
-                      <span className="rounded-md bg-background/90 backdrop-blur-md px-2.5 py-0.5 text-[10px] font-mono font-bold text-accent border border-accent/40 shadow-sm">
+                      <span className="rounded-full bg-background/90 backdrop-blur-md px-2.5 py-0.5 text-[9px] font-mono-alt font-bold text-accent border border-accent/40 shadow-sm">
                         🏆 Winner
                       </span>
-                      <span className="rounded-md bg-background/90 backdrop-blur-md px-2.5 py-0.5 text-[10px] font-mono text-foreground/80 border border-border/50">
+                      <span className="rounded-full bg-background/90 backdrop-blur-md px-2.5 py-0.5 text-[9px] font-mono text-muted-foreground border border-border/40">
                         SEO: {post.seoScore || post.seo_score || 92}/100
                       </span>
                     </div>
@@ -516,14 +515,14 @@ export function Blog() {
                   <div className="flex items-center gap-2 text-[11px] font-mono text-muted-foreground mb-2">
                     <span>📅 {post.publishedAt || post.published_at || "Recent"}</span>
                     <span>•</span>
-                    <span className="text-accent/90">{post.targetKeyword || "Technical Deep Dive"}</span>
+                    <span className="text-accent font-medium">{post.targetKeyword || "Technical Deep Dive"}</span>
                   </div>
 
-                  <h3 className="display text-lg font-bold leading-snug text-foreground group-hover:text-accent transition-colors line-clamp-2">
+                  <h3 className="display text-lg font-bold leading-[1.1] text-foreground group-hover:text-accent transition-colors line-clamp-2">
                     {post.title}
                   </h3>
 
-                  <p className="mt-3 text-xs leading-relaxed text-muted-foreground line-clamp-3 font-sans">
+                  <p className="mt-3 text-xs leading-relaxed text-muted-foreground line-clamp-3">
                     {post.tldrSummary || post.tldr_summary || post.metaDescription || (post.contentMarkdown || "").slice(0, 160).replace(/[#*`]/g, "") + "..."}
                   </p>
                 </div>
@@ -531,12 +530,12 @@ export function Blog() {
                 <div className="mt-6 border-t border-border/40 pt-4 flex items-center justify-between">
                   <div className="flex gap-1.5 flex-wrap">
                     {(post.hashtags || []).slice(0, 2).map((t) => (
-                      <span key={t} className="text-[10px] font-mono text-muted-foreground bg-accent/5 px-2 py-0.5 rounded border border-accent/20">
+                      <span key={t} className="rounded-full border border-border/60 bg-secondary/40 px-2.5 py-0.5 font-mono-alt text-[9px] uppercase tracking-wider text-muted-foreground">
                         {t}
                       </span>
                     ))}
                   </div>
-                  <span className="font-mono-alt text-[11px] uppercase tracking-wider text-accent font-bold group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                  <span className="font-mono-alt text-[10px] uppercase tracking-wider text-accent font-semibold group-hover:translate-x-1 transition-transform flex items-center gap-1">
                     Details →
                   </span>
                 </div>
@@ -544,26 +543,23 @@ export function Blog() {
             ))}
           </div>
         )}
-      </section>
+      </div>
 
-      {/* Signature Interactive Scrambled Footer */}
-      <Footer />
-
-      {/* Full Article Details View & Deep Linking Modal */}
+      {/* Full Article Details View Modal */}
       {selectedArticle && (
         <div
           onClick={(e) => {
             if (e.target === e.currentTarget) setSelectedArticle(null);
           }}
-          className="fixed inset-0 z-[300] flex items-center justify-center bg-background/85 backdrop-blur-2xl p-4 md:p-8 overflow-y-auto animate-in fade-in duration-300"
+          className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-xl p-3 sm:p-6 md:p-8 overflow-y-auto animate-in fade-in duration-300"
         >
-          <div className="relative w-full max-w-4xl max-h-[92vh] overflow-hidden rounded-3xl border border-border/80 bg-card text-foreground shadow-2xl flex flex-col">
+          <div className="relative w-full max-w-4xl max-h-[92vh] flex flex-col rounded-3xl border border-border/70 bg-card text-foreground shadow-[0_30px_90px_rgba(0,0,0,0.8)] overflow-hidden transition-all duration-300">
             {/* Modal Header */}
-            <div className="flex items-center justify-between border-b border-border/50 px-6 py-4 bg-card/95 sticky top-0 z-50 backdrop-blur-md">
+            <div className="flex items-center justify-between border-b border-border/60 px-6 py-4 bg-card/90 sticky top-0 z-50 backdrop-blur-md">
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => setSelectedArticle(null)}
-                  className="font-mono-alt text-xs uppercase tracking-widest text-muted-foreground hover:text-accent flex items-center gap-1 transition-colors cursor-pointer"
+                  className="font-mono-alt text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors"
                 >
                   ← Back to Articles
                 </button>
@@ -577,13 +573,13 @@ export function Blog() {
                 <button
                   onClick={handleShare}
                   data-cursor="link"
-                  className="font-mono-alt text-[11px] uppercase tracking-wider px-3.5 py-1.5 rounded-lg border border-border/60 hover:border-accent text-muted-foreground hover:text-foreground transition-all shadow-sm cursor-pointer"
+                  className="font-mono-alt text-[10px] uppercase tracking-wider px-3.5 py-1.5 rounded-full border border-border/60 hover:border-accent text-muted-foreground hover:text-foreground transition-all shadow-sm"
                 >
                   {copyFeedback ? "✓ Link Copied!" : "🔗 Share"}
                 </button>
                 <button
                   onClick={() => setSelectedArticle(null)}
-                  className="rounded-full p-2 text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors cursor-pointer"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-border/60 bg-background/60 text-foreground transition-all hover:bg-foreground hover:text-background hover:scale-105 active:scale-95 cursor-pointer"
                   aria-label="Close"
                 >
                   ✕
@@ -597,7 +593,7 @@ export function Blog() {
               className="p-6 md:p-10 overflow-y-auto space-y-8"
             >
               {selectedArticle.coverUrl && (
-                <div className="relative w-full max-h-96 overflow-hidden rounded-2xl border border-border/50 bg-secondary/50 shadow-lg">
+                <div className="relative w-full max-h-96 overflow-hidden rounded-2xl border border-border/50 bg-background/60 shadow-lg">
                   <img
                     src={selectedArticle.coverUrl || selectedArticle.cover_url}
                     alt={selectedArticle.title}
@@ -615,13 +611,13 @@ export function Blog() {
                   <span className="text-accent font-semibold">SEO Evaluated: {selectedArticle.seoScore || selectedArticle.seo_score || 96}/100</span>
                 </div>
 
-                <h1 className="display text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight text-foreground">
+                <h1 className="display text-3xl sm:text-4xl md:text-5xl font-extrabold leading-[1.0] text-foreground">
                   {selectedArticle.title}
                 </h1>
 
                 <div className="mt-4 flex flex-wrap gap-2">
                   {(selectedArticle.hashtags || []).map((t) => (
-                    <span key={t} className="text-xs font-mono text-accent bg-accent/10 px-3 py-1 rounded-md border border-accent/20">
+                    <span key={t} className="rounded-full border border-border/60 bg-secondary/50 px-3 py-1 font-mono-alt text-[10px] uppercase tracking-wider text-accent">
                       {t}
                     </span>
                   ))}
@@ -629,8 +625,8 @@ export function Blog() {
               </div>
 
               {/* ⚡ Key Takeaways / Direct Answer (TL;DR) Box */}
-              <div className="rounded-2xl border border-accent/40 bg-accent/[0.08] p-5 md:p-6 border-l-4 border-l-accent shadow-sm">
-                <strong className="text-accent font-mono text-xs uppercase tracking-widest block mb-2 flex items-center gap-1.5">
+              <div className="rounded-2xl border border-accent/30 bg-accent/[0.06] p-5 md:p-6 border-l-4 border-l-accent shadow-sm">
+                <strong className="text-accent font-mono-alt text-xs uppercase tracking-widest block mb-2 flex items-center gap-1.5 font-bold">
                   <span>⚡</span> Key Takeaways / Direct Answer (TL;DR):
                 </strong>
                 <p className="text-sm md:text-base text-foreground/90 leading-relaxed font-sans">
@@ -640,7 +636,7 @@ export function Blog() {
 
               {/* Formatted Markdown Body with Styled Code Blocks & Copy Button */}
               <div
-                className="prose prose-neutral dark:prose-invert max-w-none text-muted-foreground font-sans leading-relaxed text-sm md:text-base"
+                className="prose prose-invert max-w-none text-muted-foreground font-sans leading-relaxed text-sm md:text-base"
                 dangerouslySetInnerHTML={{
                   __html: renderMarkdown(
                     selectedArticle.contentMarkdown ||
@@ -687,6 +683,9 @@ export function Blog() {
           </div>
         </div>
       )}
+
+      {/* Portfolio Site Footer */}
+      <Footer />
     </main>
   );
 }

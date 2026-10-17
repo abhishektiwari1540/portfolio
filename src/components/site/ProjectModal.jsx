@@ -51,7 +51,7 @@ export function ProjectModal({ project, onClose, onSelectProject }) {
           onClose();
         }
       }}
-      className="fixed inset-0 z-[200] flex items-center justify-center bg-black/90 backdrop-blur-xl p-2 sm:p-4 md:p-8 overflow-y-auto animate-in fade-in duration-300"
+      className="fixed inset-0 z-[200] flex items-center justify-center bg-black/90 backdrop-blur-xl p-2 sm:p-4 md:p-8 overflow-y-auto overscroll-contain animate-in fade-in duration-300"
     >
       <div className="relative w-full max-w-5xl max-h-[94vh] flex flex-col rounded-2xl md:rounded-3xl border border-white/15 bg-[#0a0b10] text-foreground shadow-[0_30px_90px_rgba(0,0,0,0.9)] overflow-hidden transition-all duration-300">
         {/* Header Bar */}

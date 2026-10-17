@@ -223,26 +223,23 @@ function FeaturedWork() {
   const wrap = useRef(null);
   const headerRef = useRef(null);
   const rowsRef = useRef([]);
+  const previewRef = useRef(null);
+  const previewImgRef = useRef(null);
+  const previewTitleRef = useRef(null);
+  const previewRoleRef = useRef(null);
+  const previewYearRef = useRef(null);
+  const [hoveredIndex, setHoveredIndex] = useState(null);
   const featured = PROJECTS;
-  const { onEnter, onLeave } = useRouteHover();
   const { openProjectModal } = useProjectModal();
-
-  const handleRowEnter = (el, p) => {
-    onEnter(el, {
-      to: "/",
-      hash: "work",
-      image: p.image,
-      label: p.name,
-      sublabel: `${p.role} — ${p.year}`,
-    });
-  };
 
   const handleRowClick = (e, p) => {
     const modifier = e.metaKey || e.ctrlKey || e.shiftKey || e.altKey;
     if (modifier || e.button !== 0) return;
     e.preventDefault();
     e.stopPropagation();
-    onLeave();
+    if (previewRef.current) {
+      gsap.to(previewRef.current, { opacity: 0, scale: 0.8, duration: 0.2, overwrite: "auto" });
+    }
     openProjectModal(p);
   };
 
@@ -251,24 +248,89 @@ function FeaturedWork() {
     const container = wrap.current;
     if (!container) return;
 
-    const cleanups = [];
+    const preview = previewRef.current;
+    let xTo = null;
+    let yTo = null;
+    let rotTo = null;
+
+    if (preview) {
+      gsap.set(preview, { opacity: 0, scale: 0.82 });
+      xTo = gsap.quickTo(preview, "x", { duration: 0.35, ease: "power3.out" });
+      yTo = gsap.quickTo(preview, "y", { duration: 0.35, ease: "power3.out" });
+      rotTo = gsap.quickTo(preview, "rotation", { duration: 0.45, ease: "power2.out" });
+    }
+
+    let lastX = 0;
+    const onPointerMove = (e) => {
+      if (!xTo || !yTo) return;
+      const deltaX = e.clientX - lastX;
+      lastX = e.clientX;
+
+      const previewW = 380;
+      const previewH = 240;
+      let targetX = e.clientX + 35;
+      if (targetX + previewW > window.innerWidth - 20) {
+        targetX = e.clientX - previewW - 35;
+      }
+      let targetY = e.clientY - previewH / 2;
+      targetY = gsap.utils.clamp(20, window.innerHeight - previewH - 20, targetY);
+
+      xTo(targetX);
+      yTo(targetY);
+      if (rotTo) rotTo(gsap.utils.clamp(-6, 6, deltaX * 0.3));
+    };
+
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+
+    const cleanups = [
+      () => window.removeEventListener("pointermove", onPointerMove),
+    ];
 
     const ctx = gsap.context(() => {
       const rows = gsap.utils.toArray("[data-row]", container);
 
       rows.forEach((row, i) => {
-        const inner = row.querySelector("[data-row-inner]");
         const meta = row.querySelector("[data-row-meta]");
 
         const enter = (e) => {
-          handleRowEnter(e.currentTarget || row, featured[i]);
-          gsap.to(inner, { x: 24, duration: 0.55, overwrite: "auto" });
-          gsap.to(rows, {
-            y: (j) => (j > i ? MOTION.offset.siblingPush : 0),
-            duration: 0.6,
-            stagger: 0.01,
-            overwrite: "auto",
-          });
+          setHoveredIndex(i);
+          const p = featured[i];
+
+          // Instantaneous Image & Info Update
+          if (previewImgRef.current && p.image) {
+            previewImgRef.current.src = p.image;
+            gsap.fromTo(
+              previewImgRef.current,
+              { scale: 1.08, opacity: 0.85 },
+              { scale: 1, opacity: 1, duration: 0.35, ease: "power2.out" }
+            );
+          }
+          if (previewTitleRef.current) previewTitleRef.current.textContent = p.name;
+          if (previewRoleRef.current) previewRoleRef.current.textContent = p.role;
+          if (previewYearRef.current) previewYearRef.current.textContent = p.year;
+
+          // Reveal Floating Image Card at exact pointer coordinates
+          if (previewRef.current && e) {
+            const previewW = 380;
+            const previewH = 240;
+            let targetX = e.clientX + 35;
+            if (targetX + previewW > window.innerWidth - 20) {
+              targetX = e.clientX - previewW - 35;
+            }
+            let targetY = e.clientY - previewH / 2;
+            targetY = gsap.utils.clamp(20, window.innerHeight - previewH - 20, targetY);
+
+            gsap.killTweensOf(previewRef.current);
+            gsap.set(previewRef.current, { x: targetX, y: targetY });
+            gsap.to(previewRef.current, {
+              opacity: 1,
+              scale: 1,
+              duration: 0.35,
+              ease: "power3.out",
+            });
+          }
+
+          // Scramble Text on Meta Label
           if (meta && meta.dataset.scrambleReady && okDecorative()) {
             const originalText = meta.textContent || "";
             meta.dataset.original = originalText;
@@ -289,10 +351,17 @@ function FeaturedWork() {
           }
         };
 
-        const leave = (e) => {
-          onLeave();
-          gsap.to(inner, { x: 0, duration: 0.5, overwrite: "auto" });
-          gsap.to(rows, { y: 0, duration: 0.5, stagger: 0.01, overwrite: "auto" });
+        const leave = () => {
+          setHoveredIndex(null);
+          if (previewRef.current) {
+            gsap.to(previewRef.current, {
+              opacity: 0,
+              scale: 0.82,
+              duration: 0.25,
+              ease: "power2.inOut",
+              overwrite: "auto",
+            });
+          }
         };
 
         row.addEventListener("pointerenter", enter);
@@ -378,30 +447,79 @@ function FeaturedWork() {
       </div>
 
       <div className="relative">
-        {featured.map((p) => (
-          <Link
-            key={p.name}
-            ref={(node) => (rowsRef.current[featured.indexOf(p)] = node)}
-            data-row
-            data-cursor="view"
-            to="/"
-            hash="work"
-            aria-label={`${p.name} — view project · ${p.role}, ${p.year}`}
-            onClick={(e) => handleRowClick(e, p)}
-            className="group relative flex items-baseline justify-between border-t border-border py-6 last:border-b focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-foreground/70"
-          >
-            <span data-row-inner className="display will-change-transform text-[clamp(2.2rem,8vw,7rem)]">
-              {p.name}
-            </span>
-            <span
-              data-row-meta
-              data-scramble-ready
-              className="font-mono-alt hidden text-[11px] uppercase tracking-[0.2em] text-muted-foreground md:block will-change-transform"
+        {featured.map((p, idx) => {
+          const isHovered = hoveredIndex === idx;
+          const isSibling = hoveredIndex !== null && !isHovered;
+          return (
+            <Link
+              key={p.name}
+              ref={(node) => (rowsRef.current[idx] = node)}
+              data-row
+              data-cursor="view"
+              to="/"
+              hash="work"
+              aria-label={`${p.name} — view project · ${p.role}, ${p.year}`}
+              onClick={(e) => handleRowClick(e, p)}
+              className={`group relative flex items-baseline justify-between border-t py-6 last:border-b focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-foreground/70 transition-all duration-400 ease-out ${
+                isHovered
+                  ? "border-accent z-10"
+                  : isSibling
+                    ? "border-border/30 opacity-25 scale-[0.995]"
+                    : "border-border opacity-100"
+              }`}
             >
-              {p.role} — {p.year}
+              <span
+                data-row-inner
+                className={`display will-change-transform text-[clamp(2.2rem,8vw,7rem)] transition-all duration-400 ease-out ${
+                  isHovered
+                    ? "text-accent translate-x-7 drop-shadow-[0_0_25px_rgba(255,115,68,0.35)]"
+                    : "text-foreground translate-x-0"
+                }`}
+              >
+                {p.name}
+              </span>
+              <span
+                data-row-meta
+                data-scramble-ready
+                className={`font-mono-alt hidden text-[11px] uppercase tracking-[0.2em] md:block will-change-transform transition-all duration-400 ease-out ${
+                  isHovered ? "text-accent -translate-x-3 font-bold" : "text-muted-foreground translate-x-0"
+                }`}
+              >
+                {p.role} — {p.year}
+              </span>
+            </Link>
+          );
+        })}
+      </div>
+
+      {/* Floating Project Image Preview on Hover */}
+      <div
+        ref={previewRef}
+        aria-hidden="true"
+        className="pointer-events-none fixed left-0 top-0 z-[9990] hidden md:block will-change-transform"
+      >
+        <div className="relative w-[340px] h-[215px] lg:w-[410px] lg:h-[255px] overflow-hidden rounded-2xl border border-white/25 dark:border-white/15 bg-card shadow-[0_30px_70px_rgba(0,0,0,0.75)] backdrop-blur-md">
+          <img
+            ref={previewImgRef}
+            src={featured[0]?.image}
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover will-change-transform"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none" />
+          <div className="absolute bottom-3.5 left-4 right-4 flex items-center justify-between text-white font-mono-alt text-[11px] uppercase tracking-[0.16em]">
+            <div className="flex flex-col truncate max-w-[270px]">
+              <span ref={previewTitleRef} className="font-semibold text-white/95 drop-shadow-md text-[13px] tracking-wider">
+                {featured[0]?.name}
+              </span>
+              <span ref={previewRoleRef} className="text-[10px] text-white/70 truncate">
+                {featured[0]?.role}
+              </span>
+            </div>
+            <span ref={previewYearRef} className="text-accent font-bold drop-shadow-md text-[12px]">
+              {featured[0]?.year}
             </span>
-          </Link>
-        ))}
+          </div>
+        </div>
       </div>
     </section>
   );

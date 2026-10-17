@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { registerGsap } from "@/lib/gsap";
+import { useScrollLock } from "./useScrollLock";
 
 function renderMarkdown(md) {
   if (!md) return "";
@@ -91,6 +92,19 @@ export function ChampionBlogSection() {
   const [champion, setChampion] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedArticle, setSelectedArticle] = useState(null);
+
+  // Lock background scroll (both native body and Lenis) when modal is open
+  useScrollLock(Boolean(selectedArticle));
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape" && selectedArticle) {
+        setSelectedArticle(null);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedArticle]);
 
   const fetchChampion = async () => {
     setLoading(true);
@@ -246,7 +260,7 @@ export function ChampionBlogSection() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setSelectedArticle(null);
           }}
-          className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-xl p-3 sm:p-6 md:p-8 overflow-y-auto animate-in fade-in duration-300"
+          className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-xl p-3 sm:p-6 md:p-8 overflow-y-auto overscroll-contain animate-in fade-in duration-300"
         >
           <div className="relative w-full max-w-4xl max-h-[92vh] flex flex-col rounded-3xl border border-border/70 bg-card text-foreground shadow-[0_30px_90px_rgba(0,0,0,0.8)] overflow-hidden transition-all duration-300">
             {/* Modal Header */}

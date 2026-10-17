@@ -15,8 +15,8 @@ export function Cursor() {
     document.documentElement.classList.add("no-cursor");
 
     gsap.set(el, { xPercent: -50, yPercent: -50, opacity: 0 });
-    const x = gsap.quickTo(el, "x", { duration: 0.28, ease: "power3.out" });
-    const y = gsap.quickTo(el, "y", { duration: 0.28, ease: "power3.out" });
+    const x = gsap.quickTo(el, "x", { duration: 0.12, ease: "power3.out" });
+    const y = gsap.quickTo(el, "y", { duration: 0.12, ease: "power3.out" });
 
     let mode = "dot";
     const sizes = {

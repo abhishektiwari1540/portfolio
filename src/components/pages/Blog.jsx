@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import { Link } from "@tanstack/react-router";
 import { registerGsap } from "@/lib/gsap";
 import { Footer } from "@/components/site/Footer";
+import { useScrollLock } from "@/components/site/useScrollLock";
 
 function renderMarkdown(md) {
   if (!md) return "";
@@ -126,6 +127,19 @@ export function Blog() {
   const [selectedTag, setSelectedTag] = useState("All");
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [copyFeedback, setCopyFeedback] = useState(false);
+
+  // Lock background scroll when reader modal is open
+  useScrollLock(Boolean(selectedArticle));
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape" && selectedArticle) {
+        setSelectedArticle(null);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedArticle]);
 
   useEffect(() => {
     registerGsap();
@@ -551,7 +565,7 @@ export function Blog() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setSelectedArticle(null);
           }}
-          className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-xl p-3 sm:p-6 md:p-8 overflow-y-auto animate-in fade-in duration-300"
+          className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-xl p-3 sm:p-6 md:p-8 overflow-y-auto overscroll-contain animate-in fade-in duration-300"
         >
           <div className="relative w-full max-w-4xl max-h-[92vh] flex flex-col rounded-3xl border border-border/70 bg-card text-foreground shadow-[0_30px_90px_rgba(0,0,0,0.8)] overflow-hidden transition-all duration-300">
             {/* Modal Header */}

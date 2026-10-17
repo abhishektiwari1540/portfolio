@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Cursor } from "./Cursor";
+import { MagicQuillRibbon } from "./MagicQuillRibbon";
 import { SmoothScroll } from "./SmoothScroll";
 import { Chrome } from "./Chrome";
 import { PageTransition } from "./PageTransition";
@@ -34,6 +35,7 @@ export function SiteShell({ children }) {
         <div className="grain relative min-h-screen bg-background text-foreground">
           {mounted && <SmoothScroll />}
           {mounted && <Cursor />}
+          {mounted && <MagicQuillRibbon />}
           <Chrome />
           <PageTransition />
           {children}
